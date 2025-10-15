@@ -4,7 +4,7 @@ import { initStrudel, note, hush, evalScope, getAudioContext, webaudioOutput, re
 import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './Songs/tunes';
+import { stranger_tune } from './tunes';
 
 let globalEditor = null;
 
