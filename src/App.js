@@ -1,4 +1,4 @@
-import '../cors-redirect';
+import './cors-redirect';
 import './App.css';
 import { initStrudel, note, hush, evalScope, getAudioContext, webaudioOutput, registerSynthSounds, initAudioOnFirstClick, transpiler } from "@strudel/web";
 import { useEffect, useRef } from "react";
