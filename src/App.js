@@ -106,6 +106,32 @@ export default function App() {
         </div>
       )}
 
+      <div className="row">
+        <div className="col-md-8">
+          <label htmlFor="proc" className="form-label"><strong>Code Editor</strong></label>
+          <textarea id="proc" className="form-control mb-2" rows="10" value={code} onChange={(e) => setCode(e.target.value)}/>
+      </div>
+
+        <div className="col-md-4">
+          <Controls
+            onPreprocess={handlePreprocess}
+            onProcessAndPlay={handleProcessAndPlay}
+            onPlay={() =>  play()}
+            onStop={() => stop()}
+            onSavePreset={savePreset}
+            onLoadPreset={loadPresetFile}
+            volume={volume}
+            setVolume={setVolume}
+            bpm={bpm}
+            setBpm={setBpm}
+            reverb={reverb}
+            setReverb={setReverb}
+            instrument={instrument}
+            setInstrument={setInstrument}
+          />
+        </div>
+      </div>
       
+
 
 }
