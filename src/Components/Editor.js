@@ -28,6 +28,23 @@ const Editor = forwardRef(({ code }, ref) => {
             await initStrudel();
             if (!alive) return;
 
+            const mirror = new StrudelMirror({
+                defaultOutput: webaudioOutput,
+                getTime: () => getAudioContext().currentTime,
+                transpiler,
+                root: editorDiv.current,
+                prebake: async () => {
+                    initAudioOnFirstClick();
+                    const loadModules = evalScope(
+                        import('@strudel/core'),
+                        import('@strudel/draw'),
+                        import('@strudel/mini'),
+                        import('@strudel/tonal'),
+                        import('@strudel/webaudio')
+                    );
+                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+                },
+            });
             
 
 
