@@ -18,4 +18,16 @@ export default function App() {
   const editorRef = useRef(null);
   const { processText, processAndPlay, play, stop, setEditorCode } = useProcessor(editorRef, p1State, setAlert);
 
-  
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (editorRef.current && editorRef.current.repl?.state?.started) {
+          stop();
+        } else {
+          play();
+        }
+      }
+
+
+    }
