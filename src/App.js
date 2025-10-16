@@ -96,5 +96,16 @@ export default function App() {
   };
 
   return (
-    
+    <div className="container-fluid-p-3">
+      <h2>Strudel Music Editor</h2>
+
+      {alert && (
+        <div className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
+          {alert.text}
+          <button type="button" className="btn-close" aria-label="Close" onClick={() => setAlert(null)}></button>
+        </div>
+      )}
+
+      
+
 }
