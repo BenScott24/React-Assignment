@@ -16,5 +16,6 @@ export default function App() {
   const [instrument, setInstrument] = userState('piano');
   const [alert, setAlert] = userState(null);
   const editorRef = useRef(null);
+  const { processText, processAndPlay, play, stop, setEditorCode } = useProcessor(editorRef, p1State, setAlert);
 
   
