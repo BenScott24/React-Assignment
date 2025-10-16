@@ -83,6 +83,18 @@ export default function App() {
     setAlert({ type: 'info', text: 'Code processed successfully' });
   };
 
-  
+  const handleProcessAndPlay = () => {
+    const processed = processText(code);
+    setCode(processed);
+    setEditorCode(processed);
 
+    if (editorRef.current?.setRuntimeOptions) {
+      editorRef.current.setRuntimeOptions({ volume, bpm, reverb, instrument });
+    }
+    processAndPlay(processed);
+    setAlert({ type: 'success', text: 'Playing processed code' });
+  };
+
+  return (
+    
 }
