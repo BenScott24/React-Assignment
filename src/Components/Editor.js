@@ -45,7 +45,19 @@ const Editor = forwardRef(({ code }, ref) => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
+            strudelEditor.current = mirror;
+            mirror.setCode(code || '');
+        };
 
+        setup();
+        return() => { alive = false; };
+    }, []);
 
-}
+    useEffect(() => {
+        if (strudelEditor.current) strudelEditor.current.setCode(code || '');
+    }, [code]);
+
+    return <div ref={editorDiv} id="editor" style={{ border: '1px solid #ccc', height: '400px%' }} />;
+});
+
+export default Editor;
