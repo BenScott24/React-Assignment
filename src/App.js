@@ -28,6 +28,15 @@ export default function App() {
           play();
         }
       }
+      if (e.key === "p") {
+        const newCode = processText(code);
+        setCode(newCode);
+        setEditorCode(newCode);
+        setAlert({ type: 'info', text: 'Code processed successfully' });
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [code, play, stop, processText, setEditorCode]);
 
-
-    }
+  
