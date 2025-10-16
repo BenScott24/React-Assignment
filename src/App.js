@@ -39,4 +39,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', handler);
   }, [code, play, stop, processText, setEditorCode]);
 
+  useEffect(() => {
+    if (editorRef.current) editorRef.current.setCode(code);
+  }, [code]);
+
   
