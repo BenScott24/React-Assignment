@@ -22,5 +22,13 @@ const Editor = forwardRef(({ code }, ref) => {
 
     }));
 
-    
+    useEffect(() => {
+        let alive = true;
+        const setup = async () => {
+            await initStrudel();
+            if (!alive) return;
+
+            
+
+
 }
