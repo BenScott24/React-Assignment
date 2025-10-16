@@ -43,4 +43,18 @@ export default function App() {
     if (editorRef.current) editorRef.current.setCode(code);
   }, [code]);
 
+  const savePreset = useCallback(() => {
+    const preset = { code, p1State, volume, bpm, reverb, instrument };
+    const blob = new Blob([JSON.stringify(preset, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'strudel_preset.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    setAlert({ type: 'success', text: 'Preset saved successfully' });
+  }, [code, p1State, volume, bpm, reverb, instrument]);
+
   
+
+}
