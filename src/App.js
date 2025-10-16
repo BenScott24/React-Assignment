@@ -76,4 +76,13 @@ export default function App() {
     reader.readAsText(file);
   };
 
+  const handlePreprocess = () => {
+    const newCode = processText(code);
+    setCode(newCode);
+    setEditorCode(newCode);
+    setAlert({ type: 'info', text: 'Code processed successfully' });
+  };
+
+  
+
 }
