@@ -131,7 +131,21 @@ export default function App() {
           />
         </div>
       </div>
-      
 
+      <div className="row mt-3">
+        <div className="col-md-8">
+          <Editor ref={editorRef} code={code} />
+        </div>
+      
+      <div className="col-md-4">
+        <Options p1State={p1State} setP1State={setP1State} />
+        <div className="mt-3">
+          <h6>Waveform</h6>
+          <D3Waveform code={code} />
+        </div>
+      </div>
+    </div>
+  </div>
+  );
 
 }
