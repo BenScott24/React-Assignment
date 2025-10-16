@@ -55,6 +55,25 @@ export default function App() {
     setAlert({ type: 'success', text: 'Preset saved successfully' });
   }, [code, p1State, volume, bpm, reverb, instrument]);
 
-  
+  const loadPresetFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const preset = JSON.parse(e.target.result);
+        setCode(loaded.code ?? '');
+        setP1State(loaded.p1State ?? 'ON');
+        setVolume(loaded.volume ?? 0.8);
+        setBpm(loaded.bpm ?? 120);
+        setReverb(loaded.reverb ?? false);
+        setInstrument(loaded.instrument ?? 'piano');
+        setAlert({ type: 'success', text: 'Preset loaded successfully' });
+      } catch (err) {
+        console.error(err);
+        setAlert({ type: 'error', text: 'Failed to load preset: Invalid JSON' });
+      }
+    };
+    reader.readAsText(file);
+  };
 
 }
