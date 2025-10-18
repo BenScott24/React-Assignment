@@ -1,18 +1,11 @@
- 
- 
- 
- 
- 
- const processAndPlay = (text) => {
+export default function useProcessor(editorRef, processText, setAlert) {
+    const processText = (text) => {
         try {
-            const processed = processText(text);
-            if(editorRef.current) {
-                editorRef.current.setCode(processed);
-                setTimeout(() => { editorRef.current.evaluate(); }, 150);
-            }
+            const replacement = p1State === 'OFF' ? '_' : '';
+            return text.replaceAll('<p1_Radio', replacement);
         } catch (error) {
-            console.error(error);
-            setAlert?.({ type: 'danger', text: 'Processing and playback failed.'});
+            setAlert?.({ type: 'danger', text: 'Preprocessing failed.'});
+            return text;
         }
     };
 
