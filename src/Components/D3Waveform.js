@@ -6,10 +6,11 @@ export default function D3Waveform({ code }) {
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);
+
         const lines = (code || '').split('\n');
         const data = lines.length ? lines.map((line, index) => ({ x: index, y: line.length })) : [{x: 0, y: 0}];
 
-        const width = Math.max(400, data.length * 10);
+        const width = Math.max(400, data.length * 15);
         const height = 120;
         svg.attr('viewBox', `0 0 ${width} ${height}`).style('width', '100%').style('height', '120px');
 
@@ -30,8 +31,8 @@ export default function D3Waveform({ code }) {
             .classed('bar-group', true)
             .attr('transform', d => `translate(${xscale(d.x)}, 0)`);
 
-        barGroups.append('rect')
-            .attr('x', 0)
+        svg.selectAll('rect')
+            .attr('x', d => xscale(d.x))
             .attr('y', height)
             .attr('height', 0)
             .attr('width', xscale.bandwidth())
