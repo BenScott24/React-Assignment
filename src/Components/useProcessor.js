@@ -1,4 +1,4 @@
-export default function useProcessor(editorRef, processText, setAlert) {
+export default function useProcessor(editorRef, p1State, setAlert) {
     const processText = (text) => {
         try {
             const replacement = p1State === 'OFF' ? '_' : '';
