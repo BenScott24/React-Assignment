@@ -52,6 +52,19 @@ export default function Controls({
                             <input type="checkbox" className="form-check-input" id="reverbCheck" checked={reverb} onChange={(e) => setReverb(e.target.checked)} />
                             <label className="form-check-label" htmlFor="reverbCheck">Enable Reverb</label>
                         </div>
+                        <label className="form-label">Instrument:</label>
+                        <select className="form-select" value={instrument} onChange={(e) => setInstrument(e.target.value)}>
+                            <option value="piano">Piano</option>
+                            <option value="sine">Sine Wave</option>
+                            <option value="synth">Synth</option>
+                            <option value="organ">Organ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div className="accordion-item mt-2">
+
                         
     
       
