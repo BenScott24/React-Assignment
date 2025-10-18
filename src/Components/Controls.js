@@ -44,14 +44,15 @@ export default function Controls({
                 </h2>
                 <div id="collapseControls" className="accordion-collapse collapse" aria-labelledby="headingControls" data-bs-parent="#controlsAccordion">
                     <div className="accordion-body">
-                        <div className="mb-3">
-                            <label htmlFor="volumeRange" className="form-label">Volume: {volume}</label>
-                            <input type="range" className="form-range" id="volumeRange" min="0" max="100" value={volume} onChange={(e) => setVolume(Number(e.target.value))} />
+                        <label className="form-label">Volume: {Math.round(volume * 100)}%</label>
+                        <input type="range" className="form-range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} />
+                        <label className="form-label mt-3">BPM: {bpm}</label>
+                        <input type="number" min="20" max="300" value={bpm} onChange={(e) => setBpm(Number(e.target.value))} className="form-control mb-2" />
+                        <div classNmae="form-check mb-2">
+                            <input type="checkbox" className="form-check-input" id="reverbCheck" checked={reverb} onChange={(e) => setReverb(e.target.checked)} />
+                            <label className="form-check-label" htmlFor="reverbCheck">Enable Reverb</label>
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="bpmRange" className="form-label">BPM: {bpm}</label>
-                            <input type="range" className="form-range" id="bpmRange" min="60" max="200" value={bpm} onChange={(e) => setBpm(Number(e.target.value))
-    ) 
+                        
     
       
 }
