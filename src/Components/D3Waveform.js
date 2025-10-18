@@ -32,4 +32,13 @@ export default function D3Waveform({ code }) {
 
         barGroups.append('rect')
             .attr('x', 0)
-            
+            .attr('y', height)
+            .attr('height', 0)
+            .attr('width', xscale.bandwidth())
+            .attr('fill', (d, i) => `rgb(31, 111, ${150 + index % 100})`)
+            .transition()
+            .duration(600)
+            .delay((d, i) => index * 20)
+            .attr('y', d => yscale(d.y))
+            .attr('height', d => height - yscale(d.y));
+
