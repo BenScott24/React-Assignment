@@ -96,7 +96,7 @@ export default function App() {
   };
 
   return (
-    <div className="container-fluid-p-3">
+    <div className="container-fluid p-3">
       <h2>Strudel Music Editor</h2>
 
       {alert && (

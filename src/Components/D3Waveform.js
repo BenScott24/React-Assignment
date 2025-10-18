@@ -6,7 +6,7 @@ export default function D3Waveform({ code }) {
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);
-        const width = 4000;
+        const width = Math.max(400, data.length * 10);
         const height = 120;
         svg.attr('viewBox', `0 0 ${width} ${height}`).style('width', '100%').style('height', '120px');
 
@@ -35,10 +35,10 @@ export default function D3Waveform({ code }) {
             .attr('y', height)
             .attr('height', 0)
             .attr('width', xscale.bandwidth())
-            .attr('fill', (d, i) => `rgb(31, 111, ${150 + index % 100})`)
+            .attr('fill', (d, i) => `rgb(31, 111, ${150 + i % 100})`)
             .transition()
             .duration(600)
-            .delay((d, i) => index * 20)
+            .delay((d, i) => i * 20)
             .attr('y', d => yscale(d.y))
             .attr('height', d => height - yscale(d.y));
         

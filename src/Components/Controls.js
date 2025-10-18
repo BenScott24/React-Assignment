@@ -39,7 +39,7 @@ export default function Controls({
             </div>
 
             <div className="accordion-item mt-2">
-                <h2 classNmae="accordion-header" id="headingControls">
+                <h2 className="accordion-header" id="headingControls">
                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseControls" aria-expanded="false" aria-controls="collapseControls">Audio Controls</button>
                 </h2>
                 <div id="collapseControls" className="accordion-collapse collapse" aria-labelledby="headingControls" data-bs-parent="#controlsAccordion">
@@ -48,7 +48,7 @@ export default function Controls({
                         <input type="range" className="form-range" min="0" max="1" step="0.01" value={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} />
                         <label className="form-label mt-3">BPM: {bpm}</label>
                         <input type="number" min="20" max="300" value={bpm} onChange={(e) => setBpm(Number(e.target.value))} className="form-control mb-2" />
-                        <div classNmae="form-check mb-2">
+                        <div className="form-check mb-2">
                             <input type="checkbox" className="form-check-input" id="reverbCheck" checked={reverb} onChange={(e) => setReverb(e.target.checked)} />
                             <label className="form-check-label" htmlFor="reverbCheck">Enable Reverb</label>
                         </div>

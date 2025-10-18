@@ -1,4 +1,4 @@
-import { forwardRef, use, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { initStrudel, getAudioContext, webaudioOutput, transpiler, evalScope, registerSynthSounds, initAudioOnFirstClick, } from "@strudel/web";
 import { registerSoundfonts } from "@strudel/soundfonts";
 
