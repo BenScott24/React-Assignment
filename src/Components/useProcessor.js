@@ -44,6 +44,6 @@ export default function useProcessor(editorRef, processText, setAlert) {
         editorRef.current?.setCode(code);
     };
 
-    return { preprocess, processAndPlay, play, stop, setEditorCode };
+    return { processText, processAndPlay, play, stop, setEditorCode };
 }
 
