@@ -10,7 +10,18 @@ export default function Options({ p1State, setP1State}) {
                 <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked={p1State === 'OFF'} onChange={() => setP1State('OFF')} />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">Off</label>
             </div>
-        </div>
 
-        
-    )
+            <hr />
+            <div>
+                <strong>Hotkeys:</strong>
+                <ul>
+                    <li><kbd>Space</kbd> Play/Pause</li>
+                    <li><kbd>P</kbd> Run Preprocessing</li>
+                </ul>
+            </div>
+        </div>
+    );
+}
+
+
+    
