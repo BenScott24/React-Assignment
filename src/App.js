@@ -22,11 +22,8 @@ export default function App() {
     const handler = (e) => {
       if (e.code === "Space") {
         e.preventDefault();
-        if (editorRef.current && editorRef.current.repl?.state?.started) {
-          stop();
-        } else {
-          play();
-        }
+        if (editorRef.current && editorRef.current.repl?.state?.started) stop()
+          else play();
       }
       if (e.key === "p") {
         const newCode = processText(code);
@@ -68,8 +65,7 @@ export default function App() {
         setReverb(preset.reverb ?? false);
         setInstrument(preset.instrument ?? 'piano');
         setAlert({ type: 'success', text: 'Preset loaded successfully' });
-      } catch (err) {
-        console.error(err);
+      } catch{
         setAlert({ type: 'error', text: 'Failed to load preset: Invalid JSON' });
       }
     };
