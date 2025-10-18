@@ -15,3 +15,13 @@ export default function D3Waveform({ code }) {
         const lines = (code || '').split('\n');
         const data = lines.length ? lines.map((line, index) => ({ x: index, y: line.length })) : [{x: 0, y: 0}];
 
+        const xscale = d3.scaleBand()
+        .domain(data.map(d => d.x))
+        .range([0, width])
+        .paddingInner(0.1);
+
+        const yscale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.y) || 1])
+        .range([height, 0]);
+
+        
