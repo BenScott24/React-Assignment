@@ -1,3 +1,8 @@
+ 
+ 
+ 
+ 
+ 
  const processAndPlay = (text) => {
         try {
             const processed = processText(text);
@@ -42,4 +47,10 @@
         }
     };
 
-    
+    const setEditorCode = (code) => {
+        editorRef.current?.setCode(code);
+    };
+
+    return { preprocess, processAndPlay, play, stop, setEditorCode };
+}
+
