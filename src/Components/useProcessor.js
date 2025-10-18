@@ -23,3 +23,12 @@
             setAlert?.({ type: 'danger', text: 'Processing and playback failed.'});
         }
     };
+
+    const play = () => {
+        try {
+            editorRef.current?.evaluate();
+        } catch (error) {
+            console.error(error);
+            setAlert?.({ type: 'danger', text: 'Playback failed.'});
+        }
+    };
