@@ -6,14 +6,14 @@ export default function D3Waveform({ code }) {
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);
+        const lines = (code || '').split('\n');
+        const data = lines.length ? lines.map((line, index) => ({ x: index, y: line.length })) : [{x: 0, y: 0}];
+
         const width = Math.max(400, data.length * 10);
         const height = 120;
         svg.attr('viewBox', `0 0 ${width} ${height}`).style('width', '100%').style('height', '120px');
 
         svg.selectAll("*").remove();
-
-        const lines = (code || '').split('\n');
-        const data = lines.length ? lines.map((line, index) => ({ x: index, y: line.length })) : [{x: 0, y: 0}];
 
         const xscale = d3.scaleBand()
         .domain(data.map(d => d.x))
