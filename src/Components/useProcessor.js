@@ -32,3 +32,14 @@
             setAlert?.({ type: 'danger', text: 'Playback failed.'});
         }
     };
+
+    const stop = () => {
+        try {
+            editorRef.current?.stop();
+        } catch (error) {
+            console.error(error);
+            setAlert?.({ type: 'danger', text: 'Stop failed.'});
+        }
+    };
+
+    
