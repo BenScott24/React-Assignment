@@ -25,14 +25,11 @@ const Editor = forwardRef(({ code }, ref) => {
     useEffect(() => {
         let alive = true;
         const setup = async () => {
-            await initStrudel();
-            if (!alive) return;
-
-            const mirror = new StrudelMirror({
+            const editor = await initStrudel({
+                root: editorDiv.current,
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
-                root: editorDiv.current,
                 prebake: async () => {
                     initAudioOnFirstClick();
                     const loadModules = evalScope(
@@ -45,19 +42,23 @@ const Editor = forwardRef(({ code }, ref) => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            strudelEditor.current = mirror;
-            mirror.setCode(code || '');
+          
+            if (!alive) return;
+
+            strudelEditor.current = editor;
+            editor.setCode(code || '');
         };
 
         setup();
-        return() => { alive = false; };
+
+        return () => { alive = false; };
     }, []);
 
     useEffect(() => {
         if (strudelEditor.current) strudelEditor.current.setCode(code || '');
     }, [code]);
 
-    return <div ref={editorDiv} id="editor" style={{ border: '1px solid #ccc', height: '400px%' }} />;
+    return <div ref={editorDiv} id="editor" style={{ border: '1px solid #ccc', height: '400px' }} />;
 });
 
 export default Editor;
