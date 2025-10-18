@@ -61,12 +61,12 @@ export default function App() {
     reader.onload = (e) => {
       try {
         const preset = JSON.parse(e.target.result);
-        setCode(loaded.code ?? '');
-        setP1State(loaded.p1State ?? 'ON');
-        setVolume(loaded.volume ?? 0.8);
-        setBpm(loaded.bpm ?? 120);
-        setReverb(loaded.reverb ?? false);
-        setInstrument(loaded.instrument ?? 'piano');
+        setCode(preset.code ?? '');
+        setP1State(preset.p1State ?? 'ON');
+        setVolume(preset.volume ?? 0.8);
+        setBpm(preset.bpm ?? 120);
+        setReverb(preset.reverb ?? false);
+        setInstrument(preset.instrument ?? 'piano');
         setAlert({ type: 'success', text: 'Preset loaded successfully' });
       } catch (err) {
         console.error(err);
