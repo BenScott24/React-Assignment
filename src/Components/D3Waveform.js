@@ -24,4 +24,12 @@ export default function D3Waveform({ code }) {
         .domain([0, d3.max(data, d => d.y) || 1])
         .range([height, 0]);
 
-        
+        const barGroups = svg.selectAll("g.bar-group")
+            .data(data)
+            .join('g')
+            .classed('bar-group', true)
+            .attr('transform', d => `translate(${xscale(d.x)}, 0)`);
+
+        barGroups.append('rect')
+            .attr('x', 0)
+            
