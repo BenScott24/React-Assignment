@@ -1,5 +1,5 @@
 import './App.css';
-import { userState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Editor from './Components/Editor';
 import Controls from './Components/Controls';
 import Options from './Components/Options';
@@ -8,13 +8,13 @@ import useProcessor from './Components/useProcessor';
 import { stranger_tune } from './Tunes/stranger_tune';
 
 export default function App() {
-  const [code, setCode] = userState(stranger_tune);
-  const [p1State, setP1State] = userState('ON');
-  const [volume, setVolume] = userState(0.8);
-  const [bpm, setBpm] = userState(120);
-  const [reverb, setReverb] = userState(false);
-  const [instrument, setInstrument] = userState('piano');
-  const [alert, setAlert] = userState(null);
+  const [code, setCode] = useState(stranger_tune);
+  const [p1State, setP1State] = useState('ON');
+  const [volume, setVolume] = useState(0.8);
+  const [bpm, setBpm] = useState(120);
+  const [reverb, setReverb] = useState(false);
+  const [instrument, setInstrument] = useState('piano');
+  const [alert, setAlert] = useState(null);
   const editorRef = useRef(null);
   const { processText, processAndPlay, play, stop, setEditorCode } = useProcessor(editorRef, p1State, setAlert);
 
