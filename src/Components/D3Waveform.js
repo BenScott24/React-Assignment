@@ -41,4 +41,15 @@ export default function D3Waveform({ code }) {
             .delay((d, i) => index * 20)
             .attr('y', d => yscale(d.y))
             .attr('height', d => height - yscale(d.y));
+        
+        svg.append('line')
+            .attr('x1', 0)
+            .attr('y1', height)
+            .attr('x2', width)
+            .attr('y2', height)
+            .attr('stroke', 'black')
+            .attr('stroke-width', 1);
+    }, [code]);
 
+    return <svg ref={svgRef}></svg>;
+}
