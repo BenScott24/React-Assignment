@@ -1,5 +1,5 @@
 import { forwardRef, use, useEffect, useImperativeHandle, useRef } from "react";
-import { initStrudel, StrudelMirror, getAudioContext, webaudioOutput, transpiler, evalScope, registerSynthSounds, initAudioOnFirstClick, } from "@strudel/web";
+import { initStrudel, getAudioContext, webaudioOutput, transpiler, evalScope, registerSynthSounds, initAudioOnFirstClick, } from "@strudel/web";
 import { registerSoundfonts } from "@strudel/soundfonts";
 
 const Editor = forwardRef(({ code }, ref) => {
