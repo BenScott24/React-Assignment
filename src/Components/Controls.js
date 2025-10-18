@@ -64,8 +64,26 @@ export default function Controls({
             </div>
 
             <div className="accordion-item mt-2">
-
-                        
-    
-      
+                <h2 className="accordion-header" id="headingJSON">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJSON" aria-expanded="false" aria-controls="collapseJSON">Preset Management</button>
+                </h2>
+                <div id="collapseJSON" className="accordion-collapse collapse" aria-labelledby="headingJSON" data-bs-parent="#controlsAccordion">
+                    <div className="accordion-body">
+                        <div className="d-grid gap-2">
+                            <button className="btn btn-warning" onClick={onSavePreset}>Save Preset</button>
+                            <div>
+                                <input type="file" accept="application/json" ref={fileInputRef} onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) onLoadPreset(file);
+                                    fileInputRef.current.value = null;
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <small className="text-muted">Load a preset JSON file to restore settings.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    );      
 }
