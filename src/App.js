@@ -1,5 +1,5 @@
 import './App.css';
-import StrudelEditor from './Component/StrudelEditor';
+import StrudelEditor from './components/StrudelEditor';
 
 function App() {
     return (

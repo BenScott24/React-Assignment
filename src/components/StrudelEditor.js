@@ -6,8 +6,8 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import { stranger_tune } from '../tunes';
+import console_monkey_patch from '../console-monkey-patch';
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
 import { SetupButtons, Proc } from "./setupButtons";
@@ -20,7 +20,6 @@ export default function StrudelEditor() {
     useEffect(() => {
     
         if (!hasRun.current) {
-            document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
             hasRun.current = true;
             //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
