@@ -40,4 +40,13 @@ note("<[D2!28 Cs2!4] B1*32 [E2!28 D2!4] A1*32>/2").s("gm_electric_bass_pick")
 .lp(1000).compressor("-20:20:10:.002:.02").room(".6:2")
 .postgain(1.5).color('white')._scope({thickness:2})
 
+let chordOrg =
+n(`<[0,2,4,6]
+[-1,0,2,4]
+[1,3,5,7]
+[-2,0,1,3]
+>/2`).scale("D2:major").s("gm_church_organ:4")
+.legato(1).delay(".45:.1:.3").room(".6:2")
+.postgain(.6)._pianoroll({labels:1,fill:0,strikeActive:1})
+
 `
