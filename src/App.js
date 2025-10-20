@@ -6,7 +6,7 @@ function App() {
     return (
         <div className="App container-fluid">
             <h2>
-                <img src={icon} alt="App Icon" style={{width:'60px', marginRight: '10px'}} />
+                <img src={icon} alt="App Icon" style={{width:'90px', marginRight: '10px'}} />
                 Strudel Web App
             </h2>
             <StrudelEditor />
