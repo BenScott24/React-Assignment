@@ -12,6 +12,16 @@ body {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #0a2a66;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
