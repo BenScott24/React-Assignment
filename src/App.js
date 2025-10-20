@@ -3,7 +3,7 @@ import StrudelEditor from './components/StrudelEditor';
 
 function App() {
     return (
-        <div clasName="App container-fluid">
+        <div className="App container-fluid">
             <h2>Strudel Web App</h2>
             <StrudelEditor />
         </div>
