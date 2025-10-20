@@ -22,13 +22,13 @@ export default function StrudelEditor() {
         if (!hasRun.current) {
             console_monkey_patch();
             hasRun.current = true;
-            //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-                //init canvas
+
                 const canvas = document.getElementById('roll');
                 canvas.width = canvas.width * 2;
                 canvas.height = canvas.height * 2;
                 const drawContext = canvas.getContext('2d');
-                const drawTime = [-2, 2]; // time window of drawn haps
+                const drawTime = [-2, 2]; 
+
                 globalEditor = new StrudelMirror({
                     defaultOutput: webaudioOutput,
                     getTime: () => getAudioContext().currentTime,
@@ -37,7 +37,7 @@ export default function StrudelEditor() {
                     drawTime,
                     onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
                     prebake: async () => {
-                        initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
+                        initAudioOnFirstClick(); 
                         const loadModules = evalScope(
                             import('@strudel/core'),
                             import('@strudel/draw'),
@@ -49,7 +49,7 @@ export default function StrudelEditor() {
                     },
                 });
                 
-            document.getElementById('proc').value = stranger_tune;
+            globalEditor.setCode(stranger_tune);
             SetupButtons(globalEditor);
             Proc(globalEditor);
             }
