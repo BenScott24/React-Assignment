@@ -49,4 +49,26 @@ n(`<[0,2,4,6]
 .legato(1).delay(".45:.1:.3").room(".6:2")
 .postgain(.6)._pianoroll({labels:1,fill:0,strikeActive:1})
 
-`
+let chordArp =
+n(`<[0 2 4 6]*8
+[-1 0 2 4]*8
+[1 3 5 7]*8
+[-2 0 1 3]*8
+>/2`).scale("D4:major").s("gm_electric_guitar_jazz:<2 3>")
+.legato(.08).delay(".45:.1:.3").room(".6:2").velocity(saw.range(.8,1).fast(4))
+.juxBy(1,rev())
+.postgain(1.8)
+
+$:arrange(
+  [2,stack(m1,dr)],
+  [8,s_polymeter(m1,dr,chord,bass1note)],
+  [8,s_polymeter(m1,dr,chord,bass1note,bassline)],
+  [8,s_polymeter(m2,dr,chord,bass1note,bassline,chordArp)],
+  [8,s_polymeter(m2,dr,chord,bass1note,bassline,chordOrg,chordArp)],
+  [4,s_polymeter(m2,dr,chord,bass1note,bassline,chordOrg,chordArp)],
+  [4,s_polymeter(m2,arrange([2,dr],[2,silence]).fast(4),bass1note,bassline,chordOrg)]
+  )
+
+.color("<pink cyan green orange>").punchcard({labels:1,vertical:1,flipTime:1,fill:0,strokeActive:1,filpValue:1,fontFamily:'teletext'})
+
+`;
