@@ -27,4 +27,12 @@ n(`<[[0,2,4,6] ~!3] ~ ~ ~
 >`).scale("D:major").s("gm_epiano1:6")  
 .decay(1.5).release(.25).lp(2500).delay(".45:.1:.3").room(".6:2")
 .postgain(1.5).fast(2)
+
+let bass1note =
+n("<0 -1 1 -2>/2").scale("D1:major").s("gm_lead_8_bass_lead:1")
+.lp(800).clip(.1).attack(.2).release(.12)
+.delay(".45:.1:.3").room(".6:2")
+.postgain(1.3)._pianoroll({labels:1})
+
+
 `
