@@ -22,6 +22,29 @@ h2 {
   padding-bottom: 5px;
 }
 
+.container-fluid {
+  padding: 10px 20px;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+#editor {
+  background-color: #000000;
+  color: #00ff99;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 350px;
+  box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+  text-align: left;
+}
+
+.btn {
+  .width: 100%;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
