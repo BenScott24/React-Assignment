@@ -34,5 +34,10 @@ n("<0 -1 1 -2>/2").scale("D1:major").s("gm_lead_8_bass_lead:1")
 .delay(".45:.1:.3").room(".6:2")
 .postgain(1.3)._pianoroll({labels:1})
 
+let bassline =
+note("<[D2!28 Cs2!4] B1*32 [E2!28 D2!4] A1*32>/2").s("gm_electric_bass_pick")
+.decay(.5).velocity(rand.range(.7,1).fast(4))
+.lp(1000).compressor("-20:20:10:.002:.02").room(".6:2")
+.postgain(1.5).color('white')._scope({thickness:2})
 
 `
