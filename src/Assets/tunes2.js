@@ -19,5 +19,12 @@ stack( s("[bd:<1 0>(<3 1>,8,<0 2>:1.3)] , [~ sd:<15>:2.5]").note("B1").bank("Lin
 s("[LinnDrum_hh(<3 2>,8)]").hp("1000").lp("9000").decay(.3).velocity([".8 .6"]).room(".3:2").fast(2),
 s("sh*8").note("B1").bank("RolandTR808").room(".6:2").velocity("[.8 .5]!4").postgain(1.5).fast(2))._pianoroll({vertical:0,flipTime:1,fill:0,labels:1})
 
-
+let chord =
+n(`<[[0,2,4,6] ~!3] ~ ~ ~
+[[-1,0,2,4] ~!3] ~ ~ ~ 
+[[1,3,5,7] ~!3]  ~ ~ ~
+[[-2,0,1,3] ~!3]  ~ [[-2,-1,1,3] ~!3] ~ 
+>`).scale("D:major").s("gm_epiano1:6")  
+.decay(1.5).release(.25).lp(2500).delay(".45:.1:.3").room(".6:2")
+.postgain(1.5).fast(2)
 `
