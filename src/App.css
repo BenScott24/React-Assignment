@@ -1,3 +1,25 @@
+body, .App {
+  background-color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color:#ffffff;
+}
+
+
+.h2 {
+  background-color: #4d4d4d;
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: 3px solid #333;
+  font-weight: bold;
+  color:#ffffff;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border-radius: 0;
+}
+
 .editor-container {
   display: flex;
   flex-direction: column;
@@ -7,18 +29,6 @@
   min-height: 100vh;
 }
 
-h2 {
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 20px;
-  font-weight: bold;
-  border-bottom: 2px solid #0a2a66;
-  display: inline-block;
-  padding-bottom: 5px;
-  margin-bottom: 30px;
-  padding: 10px 20px;
-  border-radius: 8px;
-}
 
 .container-fluid {
   padding: 10px 20px;
