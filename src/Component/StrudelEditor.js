@@ -57,5 +57,17 @@ export default function StrudelEditor() {
 }, []);
 
     return (
-        
-    )
+        <main>
+            <div className="row">
+                <div className="col-md-8" style={{maxHeight: '50vh', overflowY: 'auto'}}>
+                    <div id="editor"/>
+                    <div id="output"/>
+                    </div>
+                    <div className="col-md-4">
+                        <Controls/>
+                </div>
+            </div>
+            <CanvasRoll/>
+        </main>
+    );
+}
