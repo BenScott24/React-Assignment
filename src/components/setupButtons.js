@@ -1,4 +1,4 @@
-import { stranger_tune } from "../tunes";
+import { stranger_tune } from "../Assets/tunes";
 
 export function SetupButtons(globalEditor) {
     if (!globalEditor) return;
