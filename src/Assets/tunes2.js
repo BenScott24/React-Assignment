@@ -20,11 +20,11 @@ s("[LinnDrum_hh(<3 2>,8)]").hp("1000").lp("9000").decay(.3).velocity([".8 .6"]).
 s("sh*8").note("B1").bank("RolandTR808").room(".6:2").velocity("[.8 .5]!4").postgain(1.5).fast(2))._pianoroll({vertical:0,flipTime:1,fill:0,labels:1})
 
 let chord =
-n(`<[[0,2,4,6] ~!3] ~ ~ ~
+n(\`<[[0,2,4,6] ~!3] ~ ~ ~
 [[-1,0,2,4] ~!3] ~ ~ ~ 
 [[1,3,5,7] ~!3]  ~ ~ ~
 [[-2,0,1,3] ~!3]  ~ [[-2,-1,1,3] ~!3] ~ 
->`).scale("D:major").s("gm_epiano1:6")  
+>\`).scale("D:major").s("gm_epiano1:6")  
 .decay(1.5).release(.25).lp(2500).delay(".45:.1:.3").room(".6:2")
 .postgain(1.5).fast(2)
 
@@ -41,20 +41,20 @@ note("<[D2!28 Cs2!4] B1*32 [E2!28 D2!4] A1*32>/2").s("gm_electric_bass_pick")
 .postgain(1.5).color('white')._scope({thickness:2})
 
 let chordOrg =
-n(`<[0,2,4,6]
+n(\`<[0,2,4,6]
 [-1,0,2,4]
 [1,3,5,7]
 [-2,0,1,3]
->/2`).scale("D2:major").s("gm_church_organ:4")
+>/2\`).scale("D2:major").s("gm_church_organ:4")
 .legato(1).delay(".45:.1:.3").room(".6:2")
 .postgain(.6)._pianoroll({labels:1,fill:0,strikeActive:1})
 
 let chordArp =
-n(`<[0 2 4 6]*8
+n(\`<[0 2 4 6]*8
 [-1 0 2 4]*8
 [1 3 5 7]*8
 [-2 0 1 3]*8
->/2`).scale("D4:major").s("gm_electric_guitar_jazz:<2 3>")
+>/2\`).scale("D4:major").s("gm_electric_guitar_jazz:<2 3>")
 .legato(.08).delay(".45:.1:.3").room(".6:2").velocity(saw.range(.8,1).fast(4))
 .juxBy(1,rev())
 .postgain(1.8)
