@@ -62,8 +62,9 @@ export default function StrudelEditor() {
                 const nextIndex = (currentTuneIndex + 1) % tunes.length;
                 setCurrentTuneIndex(nextIndex);
                 editorInstance.stop();
-                editor
-            }
+                editorInstance.setCode(tunes[nextIndex]);
+                editorInstance.evaluate();
+            };
 
     return (
         <main className="editor-container">
