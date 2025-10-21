@@ -9,9 +9,21 @@ export default function Controls({ globalEditor }) {
             globalEditor.evaluate();
             setIsPlaying(true);
         } catch (e) {
-            console.error("Could not play the song:", e);
+            console.error("Could not play the song: ", e);
         }
     };
+
+    const stop = () => {
+        if (!globalEditor) return;
+        try {
+            globalEditor.stop();
+            setIsPlaying(false);
+        } catch (e) {
+            console.error("Could not stop the song: ", e);
+        }
+    };
+
+    
 
 
     return (
