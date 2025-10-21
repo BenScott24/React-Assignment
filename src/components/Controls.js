@@ -24,7 +24,7 @@ export default function Controls({ globalEditor }) {
     };
 
     useEffect(() => {
-        const handleKey = (ev) => {
+        const handleKey = (keyEvent) => {
             if (!globalEditor) return;
 
             if (keyEvent.code == "Space") {
@@ -43,13 +43,11 @@ export default function Controls({ globalEditor }) {
                     console.error("Could not restart song: ", error)
                 }
             }
+        };
 
-
-        }
-    })
-
-
-
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [globalEditor, isPlaying]);
 
     return (
         <nav>
