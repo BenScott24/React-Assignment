@@ -70,7 +70,7 @@ export default function StrudelEditor() {
         <main className="editor-container">
             <div id="editor" />
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} />
+            <Controls globalEditor={editorInstance} skipSong={skipSong}/>
         </main>
     );
 }
