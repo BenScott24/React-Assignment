@@ -59,7 +59,9 @@ export default function StrudelEditor() {
                     },
                 });
             
-            editor.defaultOutput.connect(gain);
+            if (webaudioOutput && webaudioOutput.node) {
+                webaudioOutput.node.connect(gain);
+            }
             editor.setCode(stranger_tune);
             setEditorInstance(editor);
            
