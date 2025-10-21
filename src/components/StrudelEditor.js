@@ -6,7 +6,7 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from '../Assets/tunes';
+import { stranger_tune, birds_of_a_feather, pump_up_the_jam, the_rhythm_of_the_night } from '../Assets/tunes';
 import console_monkey_patch from '../console-monkey-patch';
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
@@ -14,6 +14,9 @@ import CanvasRoll from './CanvasRoll';
 export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
+    const [currentTuneIndex, setCurrentTuneIndex] = useState(0);
+
+    const tunes = [stranger_tune, birds_of_a_feather, pump_up_the_jam, the_rhythm_of_the_night];
 
     useEffect(() => {
     
