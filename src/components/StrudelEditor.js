@@ -17,7 +17,7 @@ export default function StrudelEditor() {
 
     useEffect(() => {
     
-        if (!hasRun.current) return;
+        if (hasRun.current) return;
             hasRun.current = true;
 
             console_monkey_patch();

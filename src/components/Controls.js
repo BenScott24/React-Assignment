@@ -60,7 +60,7 @@ export default function Controls({ globalEditor }) {
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
             <p className="mt-2 text-muted"><strong>Space = ▶/⏸</strong></p>
-            <p className="mt-2 text-muted"><storng>← = ↻</storng></p>
+            <p className="mt-2 text-muted"><strong>← = ↻</strong></p>
 
         </nav>
     );
