@@ -102,13 +102,11 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
             <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
             <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
             <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
-            <div className="control-group">
-                <button className="btn" onClick={() => setIsMuted(!isMuted)}>
-                    <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
-                </button>
-                <label htmlFor="volumeSlider"></label>
-                <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
-            </div>
+            <button className="btn" onClick={() => setIsMuted(!isMuted)}>
+                <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
+            </button>
+            <label htmlFor="volumeSlider"></label>
+            <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
         </nav>
     );
 }
