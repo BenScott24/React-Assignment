@@ -36,11 +36,12 @@ export default function StrudelEditor() {
 
                 const audioCtx = getAudioContext();
                 const gain = audioCtx.createGain();
+                gain.gain.value = 1;
                 gain.connect(audioCtx.destination);
                 setGainNode(gain);
 
                 const editor = new StrudelMirror({
-                    defaultOutput: gain,
+                    defaultOutput: webaudioOutput,
                     getTime: () => audioCtx.currentTime,
                     transpiler,
                     root: document.getElementById('editor'),
@@ -57,7 +58,8 @@ export default function StrudelEditor() {
                         await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                     },
                 });
-                
+            
+            editor.defaultOutput.connect(gain);
             editor.setCode(stranger_tune);
             setEditorInstance(editor);
            
