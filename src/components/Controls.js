@@ -8,7 +8,7 @@ export default function Controls({ globalEditor }) {
         try {
             globalEditor.evaluate();
             setIsPlaying(true);
-        } catch (e) {
+        } catch (error) {
             console.error("Could not play the song: ", e);
         }
     };
@@ -18,12 +18,26 @@ export default function Controls({ globalEditor }) {
         try {
             globalEditor.stop();
             setIsPlaying(false);
-        } catch (e) {
+        } catch (error) {
             console.error("Could not stop the song: ", e);
         }
     };
 
-    
+    useEffect(() => {
+        const handleKey = (ev) => {
+            if (!globalEditor) return;
+
+            if (keyEvent.code == "Space") {
+                keyEvent.preventDefault();
+                if (isPlaying) stop();
+                else play ();
+            }
+
+            
+        }
+    })
+
+
 
 
     return (
