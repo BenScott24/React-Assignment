@@ -51,8 +51,14 @@ export default function Controls({ globalEditor, skipSong }) {
             return;
         }
         const settings = JSON.parse(saved);
-        
-    }
+        setVolume(settings.volume);
+        setSongSpeed(settings.songSpeed);
+
+        if (globalEditor) {
+            globalEditor.setCode(globalEditor.getCode());
+        }
+        alert("Settings loaded!");
+    };
 
     useEffect(() => {
         const handleKey = (keyEvent) => {
