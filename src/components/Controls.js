@@ -46,13 +46,7 @@ export default function Controls({ globalEditor }) {
 
             if (keyEvent.code == "ArrowLeft") {
                 keyEvent.preventDefault();
-                try {
-                    globalEditor.stop();
-                    globalEditor.evaluate();
-                    setIsPlaying(true);
-                } catch (error) {
-                    console.error("Could not restart song: ", error)
-                }
+                restart();
             }
         };
 
@@ -62,20 +56,14 @@ export default function Controls({ globalEditor }) {
 
     return (
         <nav>
-            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-            <br />
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
-            <p className="mt-2 text-muted"><storng>Space = ▶/⏸</storng></p>
+            <p className="mt-2 text-muted"><strong>Space = ▶/⏸</strong></p>
             <p className="mt-2 text-muted"><storng>← = ↻</storng></p>
 
         </nav>
     );
-
-
-
 }
 
 

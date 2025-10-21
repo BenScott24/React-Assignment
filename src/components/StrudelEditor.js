@@ -10,7 +10,6 @@ import { stranger_tune } from '../Assets/tunes';
 import console_monkey_patch from '../console-monkey-patch';
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
-import { SetupButtons, Proc } from "./setupButtons";
 
 export default function StrudelEditor() {
     const hasRun = useRef(false);
@@ -51,9 +50,6 @@ export default function StrudelEditor() {
             });
             
         editor.setCode(stranger_tune);
-        SetupButtons(editor);
-        Proc(editor);
-
         setEditorInstance(editor);
         }, []);
 
