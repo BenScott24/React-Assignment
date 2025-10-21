@@ -65,8 +65,12 @@ export default function Controls({ globalEditor }) {
             <button id="process" className="btn btn-outline-primary">Preprocess</button>
             <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
             <br />
-            <button id="play" className="btn btn-outline-primary">▶</button>
-            <button id="stop" className="btn btn-outline-primary">⏸</button>
+            <button className="btn btn-outline-primary" onClick={play}>▶</button>
+            <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
+            <button className="btn btn-outline-primary" onClick={restart}>↻</button>
+            <p className="mt-2 text-muted"><storng>Space = ▶/⏸</storng></p>
+            <p className="mt-2 text-muted"><storng>← = ↻</storng></p>
+
         </nav>
     );
 
