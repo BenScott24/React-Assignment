@@ -1,11 +1,15 @@
 import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
+import volume_on from '../Assets/volume_on.svg';
+import volume_off from '../Assets/volume_off.svg';
+import volume_down from '../Assets/volume_down.svg';
 import { useEffect, useState } from "react";
 
-export default function Controls({ globalEditor, skipSong }) {
+export default function Controls({ globalEditor, skipSong, gainNode }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
     const [songSpeed, setSongSpeed] = useState(1);
+    const [isMuted, setIsMuted] = useState(false);
 
     const play = () => {
         if (!globalEditor) return;
@@ -63,22 +67,22 @@ export default function Controls({ globalEditor, skipSong }) {
     };
 
     useEffect(() => {
-        const handleKey = (keyEvent) => {
+        const handleKey = (input) => {
             if (!globalEditor) return;
 
-            if (keyEvent.code == "Space") {
-                keyEvent.preventDefault();
+            if (input.code == "Space") {
+                input.preventDefault();
                 if (isPlaying) stop();
                 else play ();
             }
 
-            if (keyEvent.code == "ArrowLeft") {
-                keyEvent.preventDefault();
+            if (input.code == "ArrowLeft") {
+                input.preventDefault();
                 restart();
             }
 
-            if (keyEvent.code == "ArrowRight") {
-                keyEvent.preventDefault();
+            if (input.code == "ArrowRight") {
+                input.preventDefault();
                 skipSong();
             }
         };
@@ -101,6 +105,10 @@ export default function Controls({ globalEditor, skipSong }) {
             <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
             <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
             <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
+            <div className="control-group">
+                <label htmlFor="volumeSlider">Volumne: {Math.round(volume * 100)}%</label>
+                <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
+            </div>
         </nav>
     );
 }

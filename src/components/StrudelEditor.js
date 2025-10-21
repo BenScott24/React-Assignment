@@ -15,6 +15,7 @@ export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
     const [currentTuneIndex, setCurrentTuneIndex] = useState(0);
+    const [gainNode, setGainNode] = useState(null);
 
     const tunes = [stranger_tune, birds_of_a_feather, pump_up_the_jam, the_rhythm_of_the_night];
 
@@ -33,9 +34,14 @@ export default function StrudelEditor() {
                 const drawContext = canvas.getContext('2d');
                 const drawTime = [-2, 2]; 
 
+                const audioCtx = getAudioContext();
+                const gain = audioCtx.createGain();
+                gain.connect(audioCtx.destination);
+                setGainNode(gain);
+
                 const editor = new StrudelMirror({
-                    defaultOutput: webaudioOutput,
-                    getTime: () => getAudioContext().currentTime,
+                    defaultOutput: gain,
+                    getTime: () => audioCtx.currentTime,
                     transpiler,
                     root: document.getElementById('editor'),
                     drawTime,
@@ -70,7 +76,7 @@ export default function StrudelEditor() {
         <main className="editor-container">
             <div id="editor" />
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} skipSong={skipSong}/>
+            <Controls globalEditor={editorInstance} skipSong={skipSong} gainNode={gainNode}/>
         </main>
     );
 }
