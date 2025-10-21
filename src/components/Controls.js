@@ -44,6 +44,16 @@ export default function Controls({ globalEditor, skipSong }) {
         alert("Settings saved!");
     };
 
+    const loadSettings = () => {
+        const saved = localStorage.getItem('strudelSettings');
+        if (!saved) {
+            alert("No saved settings found!");
+            return;
+        }
+        const settings = JSON.parse(saved);
+        
+    }
+
     useEffect(() => {
         const handleKey = (keyEvent) => {
             if (!globalEditor) return;
