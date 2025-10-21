@@ -57,6 +57,14 @@ export default function StrudelEditor() {
            
             }, []);
 
+            const skipSong = () => {
+                if (!editorInstance) return;
+                const nextIndex = (currentTuneIndex + 1) % tunes.length;
+                setCurrentTuneIndex(nextIndex);
+                editorInstance.stop();
+                editor
+            }
+
     return (
         <main className="editor-container">
             <div id="editor" />
