@@ -9,7 +9,7 @@ export default function Controls({ globalEditor }) {
             globalEditor.evaluate();
             setIsPlaying(true);
         } catch (error) {
-            console.error("Could not play the song: ", e);
+            console.error("Could not play the song: ", error);
         }
     };
 
@@ -19,7 +19,7 @@ export default function Controls({ globalEditor }) {
             globalEditor.stop();
             setIsPlaying(false);
         } catch (error) {
-            console.error("Could not stop the song: ", e);
+            console.error("Could not stop the song: ", error);
         }
     };
 
@@ -33,7 +33,18 @@ export default function Controls({ globalEditor }) {
                 else play ();
             }
 
-            
+            if (keyEvent.code == "ArrowLeft") {
+                keyEvent.preventDefault();
+                try {
+                    globalEditor.stop();
+                    globalEditor.evaluate();
+                    setIsPlaying(true);
+                } catch (error) {
+                    console.error("Could not restart song: ", error)
+                }
+            }
+
+
         }
     })
 
