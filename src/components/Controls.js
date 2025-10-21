@@ -4,6 +4,7 @@ import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
 import volume_down from '../Assets/volume_down.svg';
 import { useEffect, useState } from "react";
+import { gain } from '@strudel/core';
 
 export default function Controls({ globalEditor, skipSong, gainNode }) {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -42,10 +43,13 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
         }
     };
 
+    useEffect(() => {
+        if (!gainNode) return;
+        gainNode.gain.value = isMuted ? 0 : volume;
+    }, [volume, isMuted, gainNode]);
+
     const saveSettings = () => {
-        const settings = {
-            volume, songSpeed
-        };
+        const settings = {volume, songSpeed, isMuted};
         localStorage.setItem('strudelSettings', JSON.stringify(settings));
         alert("Settings saved!");
     };
@@ -59,10 +63,8 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
         const settings = JSON.parse(saved);
         setVolume(settings.volume);
         setSongSpeed(settings.songSpeed);
-
-        if (globalEditor) {
-            globalEditor.setCode(globalEditor.getCode());
-        }
+        if (settings.isMuted == true) setIsMuted(true);
+        else setIsMuted(false);
         alert("Settings loaded!");
     };
 
@@ -91,12 +93,7 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
         return () => window.removeEventListener("keydown", handleKey);
     }, [globalEditor, isPlaying, skipSong]);
 
-    useEffect(() => {
-        if (globalEditor && globalEditor.output) {
-            globalEditor.output.gain.value = volume;
-        }
-    }, [volume, globalEditor]);
-
+    
     return (
         <nav>
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
@@ -106,6 +103,9 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
             <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
             <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
             <div className="control-group">
+                <button className="btn" onClick={() => setIsMuted(!isMuted)}>
+                    <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
+                </button>
                 <label htmlFor="volumeSlider">Volumne: {Math.round(volume * 100)}%</label>
                 <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
             </div>
