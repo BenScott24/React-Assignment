@@ -91,6 +91,10 @@ export default function Controls({ globalEditor, skipSong }) {
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
             <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
+
+            <hr />
+            <button className="btn btn-outline-success" onClick={saveSettings}></button>
+
             <p className="hotkey-text"><strong>Hotkeys:</strong></p>
             <p className="hotkey-text"><strong>Space = ▶/⏸</strong></p>
             <p className="hotkey-text"><strong>← = ↻</strong></p>
