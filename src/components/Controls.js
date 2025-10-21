@@ -23,6 +23,17 @@ export default function Controls({ globalEditor }) {
         }
     };
 
+    const restart = () => {
+        if (!globalEditor) return;
+        try {
+            globalEditor.stop();
+            globalEditor.evaluate();
+            setIsPlaying(true);
+        } catch (error) {
+            console.error("Could not restart the song: ", error);
+        }
+    };
+
     useEffect(() => {
         const handleKey = (keyEvent) => {
             if (!globalEditor) return;
@@ -54,8 +65,8 @@ export default function Controls({ globalEditor }) {
             <button id="process" className="btn btn-outline-primary">Preprocess</button>
             <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
             <br />
-            <button id="play" className="btn btn-outline-primary">Play</button>
-            <button id="stop" className="btn btn-outline-primary">Stop</button>
+            <button id="play" className="btn btn-outline-primary">▶</button>
+            <button id="stop" className="btn btn-outline-primary">⏸</button>
         </nav>
     );
 
