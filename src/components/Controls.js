@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Controls({ globalEditor }) {
+export default function Controls({ globalEditor, skipSong }) {
     const [isPlaying, setIsPlaying] = useState(false);
 
     const play = () => {
@@ -48,6 +48,11 @@ export default function Controls({ globalEditor }) {
                 keyEvent.preventDefault();
                 restart();
             }
+
+            if (keyEvent.code == "ArrowRight") {
+                keyEvent.preventDefault();
+                skipSong();
+            }
         };
 
         window.addEventListener("keydown", handleKey);
@@ -59,8 +64,11 @@ export default function Controls({ globalEditor }) {
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
+            <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
+
             <p className="hotkey-text"><strong>Space = ▶/⏸</strong></p>
             <p className="hotkey-text"><strong>← = ↻</strong></p>
+            <p className="hotkey-text"><strong>→ = ⏭</strong></p>
 
         </nav>
     );
