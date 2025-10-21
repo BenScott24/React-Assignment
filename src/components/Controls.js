@@ -1,5 +1,5 @@
-import save_icon from '../Assets/save_icon.png';
-import upload_icon from '../Assets/upload_icon.png';
+import save_icon from '../Assets/save_icon.svg';
+import upload_icon from '../Assets/upload_icon.svg';
 import { useEffect, useState } from "react";
 
 export default function Controls({ globalEditor, skipSong }) {
