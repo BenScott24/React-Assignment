@@ -106,7 +106,7 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
                 <button className="btn" onClick={() => setIsMuted(!isMuted)}>
                     <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
                 </button>
-                <label htmlFor="volumeSlider">Volumne: {Math.round(volume * 100)}%</label>
+                <label htmlFor="volumeSlider"></label>
                 <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
             </div>
         </nav>
