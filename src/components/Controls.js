@@ -87,6 +87,12 @@ export default function Controls({ globalEditor, skipSong }) {
         return () => window.removeEventListener("keydown", handleKey);
     }, [globalEditor, isPlaying, skipSong]);
 
+    useEffect(() => {
+        if (globalEditor && globalEditor.output) {
+            globalEditor.output.gain.value = volume;
+        }
+    }, [volume, globalEditor]);
+
     return (
         <nav>
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
