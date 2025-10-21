@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 export default function Controls({ globalEditor, skipSong }) {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [volume, setVolume] = useState(1);
+    const [songSpeed, setSongSpeed] = useState(1);
 
     const play = () => {
         if (!globalEditor) return;
