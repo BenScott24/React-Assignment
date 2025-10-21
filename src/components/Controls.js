@@ -59,8 +59,8 @@ export default function Controls({ globalEditor }) {
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
-            <p className="mt-2 text-muted"><strong>Space = ▶/⏸</strong></p>
-            <p className="mt-2 text-muted"><strong>← = ↻</strong></p>
+            <p className="hotkey-text"><strong>Space = ▶/⏸</strong></p>
+            <p className="hotkey-text"><strong>← = ↻</strong></p>
 
         </nav>
     );
