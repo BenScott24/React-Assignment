@@ -1,3 +1,5 @@
+import save_icon from '../Assets/save_icon.png';
+import upload_icon from '../Assets/upload_icon.png';
 import { useEffect, useState } from "react";
 
 export default function Controls({ globalEditor, skipSong }) {
@@ -91,9 +93,8 @@ export default function Controls({ globalEditor, skipSong }) {
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
             <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
-
-            <hr />
-            <button className="btn btn-outline-success" onClick={saveSettings}></button>
+            <button className="btn btn-outline-primary" onClick={saveSettings}><img src={save_icon}/></button>
+            <button className="btn btn-outline-primary" onClick={loadSettings}><img src={upload_icon}></img></button>
 
             <p className="hotkey-text"><strong>Hotkeys:</strong></p>
             <p className="hotkey-text"><strong>Space = ▶/⏸</strong></p>
