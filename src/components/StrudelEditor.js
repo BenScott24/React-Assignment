@@ -10,6 +10,7 @@ import { stranger_tune } from '../Assets/tunes';
 import console_monkey_patch from '../console-monkey-patch';
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
+import { SetupButtons, Proc } from "./setupButtons";
 
 export default function StrudelEditor() {
     const hasRun = useRef(false);
@@ -17,7 +18,7 @@ export default function StrudelEditor() {
 
     useEffect(() => {
     
-    if (hasRun.current) return;
+    if (!hasRun.current) return;
         hasRun.current = true;
 
         console_monkey_patch();
@@ -55,9 +56,11 @@ export default function StrudelEditor() {
 
     return (
         <main className="editor-container">
-            <div id="editor" />
+            <header className="mb-3">
+                <Controls globalEditor={editorInstance} />
+            </header>
+            <div id="editor" className="mb-3"/>
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} />
         </main>
     );
 }
