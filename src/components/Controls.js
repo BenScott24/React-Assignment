@@ -95,12 +95,6 @@ export default function Controls({ globalEditor, skipSong }) {
             <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
             <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
             <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
-
-            <p className="hotkey-text"><strong>Hotkeys:</strong></p>
-            <p className="hotkey-text"><strong>Space = ▶/⏸</strong></p>
-            <p className="hotkey-text"><strong>← = ↻</strong></p>
-            <p className="hotkey-text"><strong>→ = ⏭</strong></p>
-
         </nav>
     );
 }
