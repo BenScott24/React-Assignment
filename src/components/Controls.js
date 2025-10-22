@@ -109,8 +109,6 @@ export default function Controls({ globalEditor, gainNode }) {
                     <button className="btn" onClick={() => setIsMuted(!isMuted)}>
                         <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
                     </button>
-                    <label htmlFor="volumeSlider"></label>
-                    <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
                     <button className="btn btn-outline-primary" type="button" onClick={() => setShowAdvanced(!showAdvanced)} > {showAdvanced ? "Hide Advanced Controls ▲": "Show Advanced Controls ▼"}</button>
                 </div>
             </div>
