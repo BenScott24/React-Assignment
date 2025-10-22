@@ -112,6 +112,18 @@ export default function Controls({ globalEditor, gainNode }) {
                     <button className="btn btn-outline-primary" type="button" onClick={() => setShowAdvanced(!showAdvanced)} > {showAdvanced ? "Hide Advanced Controls ▲": "Show Advanced Controls ▼"}</button>
                 </div>
             </div>
+            {showAdvanced && (
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col">
+                            <h5><strong>Instruments</strong></h5>
+                            {["piano", "guitar", "drums"].map((inst => (
+                                
+                            )))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </nav> 
     );
 }
