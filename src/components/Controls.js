@@ -117,11 +117,17 @@ export default function Controls({ globalEditor, gainNode }) {
                     <div className="row">
                         <div className="col">
                             <h5><strong>Instruments</strong></h5>
-                            {["piano", "guitar", "drums"].map((inst => (
-                                
+                            {["piano", "guitar", "drums"].map((instruments => (
+                                <div className="form-check" key={instruments}>
+                                    <input className="form-check-input" type="radio" name="instrument" value={instruments} checked ={instrument === instruments} onChange={(input) => setInstrument(input.target.value)} />
+                                    <label className="form-check-label text-white">
+                                        {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
+                                    </label>
+                                </div>
                             )))}
                         </div>
                     </div>
+                    
                 </div>
             )}
         </nav> 
