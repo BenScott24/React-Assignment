@@ -6,7 +6,6 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune, birds_of_a_feather, pump_up_the_jam, the_rhythm_of_the_night } from '../Assets/tunes';
 import console_monkey_patch from '../console-monkey-patch';
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
@@ -14,10 +13,7 @@ import CanvasRoll from './CanvasRoll';
 export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
-    const [currentTuneIndex, setCurrentTuneIndex] = useState(0);
     const [gainNode, setGainNode] = useState(null);
-
-    const tunes = [stranger_tune, birds_of_a_feather, pump_up_the_jam, the_rhythm_of_the_night];
 
     useEffect(() => {
     
@@ -66,15 +62,6 @@ export default function StrudelEditor() {
             setEditorInstance(editor);
            
             }, []);
-
-            const skipSong = () => {
-                if (!editorInstance) return;
-                const nextIndex = (currentTuneIndex + 1) % tunes.length;
-                setCurrentTuneIndex(nextIndex);
-                editorInstance.stop();
-                editorInstance.setCode(tunes[nextIndex]);
-                editorInstance.evaluate();
-            };
 
     return (
         <main className="editor-container">

@@ -2,11 +2,9 @@ import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
 import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
-import volume_down from '../Assets/volume_down.svg';
 import { useEffect, useState } from "react";
-import { gain } from '@strudel/core';
 
-export default function Controls({ globalEditor, skipSong, gainNode }) {
+export default function Controls({ globalEditor, gainNode }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
     const [songSpeed, setSongSpeed] = useState(1);
@@ -82,11 +80,6 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
                 input.preventDefault();
                 restart();
             }
-
-            if (input.code == "ArrowRight") {
-                input.preventDefault();
-                skipSong();
-            }
         };
 
         window.addEventListener("keydown", handleKey);
@@ -99,7 +92,6 @@ export default function Controls({ globalEditor, skipSong, gainNode }) {
             <button className="btn btn-outline-primary" onClick={play}>▶</button>
             <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
             <button className="btn btn-outline-primary" onClick={restart}>↻</button>
-            <button className="btn btn-outline-primary" onClick={skipSong}>⏭</button>
             <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
             <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
             <button className="btn" onClick={() => setIsMuted(!isMuted)}>
