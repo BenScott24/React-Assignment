@@ -7,6 +7,7 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import console_monkey_patch from '../console-monkey-patch';
+import { the_rhythm_of_the_night } from "../Assets/tunes";
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
 
@@ -58,7 +59,7 @@ export default function StrudelEditor() {
             if (webaudioOutput && webaudioOutput.node) {
                 webaudioOutput.node.connect(gain);
             }
-            editor.setCode(stranger_tune);
+            editor.setCode(the_rhythm_of_the_night);
             setEditorInstance(editor);
            
             }, []);
@@ -67,7 +68,7 @@ export default function StrudelEditor() {
         <main className="editor-container">
             <div id="editor" />
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} skipSong={skipSong} gainNode={gainNode}/>
+            <Controls globalEditor={editorInstance} gainNode={gainNode}/>
         </main>
     );
 }

@@ -84,7 +84,7 @@ export default function Controls({ globalEditor, gainNode }) {
 
         window.addEventListener("keydown", handleKey);
         return () => window.removeEventListener("keydown", handleKey);
-    }, [globalEditor, isPlaying, skipSong]);
+    }, [globalEditor, isPlaying]);
 
     
     return (
