@@ -9,6 +9,14 @@ export default function Controls({ globalEditor, gainNode }) {
     const [volume, setVolume] = useState(1);
     const [songSpeed, setSongSpeed] = useState(1);
     const [isMuted, setIsMuted] = useState(false);
+    const [instrument, setInstrument] = useState('piano');
+    const [effects, setEffects] = useState({
+        reverb: false,
+        delay: false,
+        distortion: false,
+    });
+    const [reverbLevel, setReverbLevel] = useState(0.3);
+    const [showAdvanced, setShowAdvanced] = useState(false);
 
     const play = () => {
         if (!globalEditor) return;
@@ -47,7 +55,7 @@ export default function Controls({ globalEditor, gainNode }) {
     }, [volume, isMuted, gainNode]);
 
     const saveSettings = () => {
-        const settings = {volume, songSpeed, isMuted};
+        const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel};
         localStorage.setItem('strudelSettings', JSON.stringify(settings));
         alert("Settings saved!");
     };
@@ -61,8 +69,10 @@ export default function Controls({ globalEditor, gainNode }) {
         const settings = JSON.parse(saved);
         setVolume(settings.volume);
         setSongSpeed(settings.songSpeed);
-        if (settings.isMuted == true) setIsMuted(true);
-        else setIsMuted(false);
+        setInstrument(settings.instrument);
+        setEffects(settings.effects);
+        setReverbLevel(settings.reverbLevel);
+        setIsMuted(settings.isMuted);
         alert("Settings loaded!");
     };
 
@@ -88,18 +98,23 @@ export default function Controls({ globalEditor, gainNode }) {
 
     
     return (
-        <nav>
-            <button className="btn btn-outline-primary" onClick={play}>▶</button>
-            <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
-            <button className="btn btn-outline-primary" onClick={restart}>↻</button>
-            <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
-            <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
-            <button className="btn" onClick={() => setIsMuted(!isMuted)}>
-                <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
-            </button>
-            <label htmlFor="volumeSlider"></label>
-            <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
-        </nav>
+        <nav className="container-fluid">
+            <div className="row">
+                <div className="col">
+                    <button className="btn btn-outline-primary" onClick={play}>▶</button>
+                    <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
+                    <button className="btn btn-outline-primary" onClick={restart}>↻</button>
+                    <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
+                    <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
+                    <button className="btn" onClick={() => setIsMuted(!isMuted)}>
+                        <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
+                    </button>
+                    <label htmlFor="volumeSlider"></label>
+                    <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))}/>
+                    <button className="btn btn-outline-primary" type="button" onClick={() => setShowAdvanced(!showAdvanced)} > {showAdvanced ? "Hide Advanced Controls ▲": "Show Advanced Controls ▼"}</button>
+                </div>
+            </div>
+        </nav> 
     );
 }
 
