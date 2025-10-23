@@ -127,7 +127,21 @@ export default function Controls({ globalEditor, gainNode }) {
                             )))}
                         </div>
                     </div>
+                    <div className="row">
+                        <div className="col">
+                            <h5><strong>Effects</strong></h5>
+                            {Object.keys(effects).map((soundEffects) => (
+                                <div className="form-check" key={soundEffects}>
+                                    <input className="form-check-input" type="checkbox" checked={effects[soundEffects]} onChange={(input) => setEffects({ ...effects, [soundEffects]: input.target.checked})} />
+                                    <label className="form-check-label text-white"> 
+                                        {soundEffects.charAt().toUpperCase() + soundEffects.slice(1)}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                     
+
                 </div>
             )}
         </nav> 
