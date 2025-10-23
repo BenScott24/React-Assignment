@@ -15,6 +15,7 @@ export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
     const [gainNode, setGainNode] = useState(null);
+    const [basslines, setBassLines] = useState(true);
 
     useEffect(() => {
     
@@ -64,6 +65,20 @@ export default function StrudelEditor() {
            
             }, []);
 
+            const procText = () => {
+                if (!editorInstance) return;
+                let text = stranger_tune;
+                const replace = basslines ? "" : "_";
+                text = text.replaceAll('<basslines>', replace)
+                editorInstance.setCode(text);
+                return text;
+            };
+
+            const procAndPlay = () => {
+                procText();
+                editorInstance?.evaluate();
+            }
+
             const updateInstrument = (instrument) => {
                 if (!editorInstance) return;
                 const code = editorInstance.getCode();
@@ -108,7 +123,7 @@ export default function StrudelEditor() {
         <main className="editor-container">
             <div id="editor" />
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} gainNode={gainNode} updateInstrument={updateInstrument} updateReverbLevel={updateReverbLevel} updateDelay={updateDelay} updateDistortion={updateDistortion} updateSongSpeed={updateSongSpeed}/>
+            <Controls globalEditor={editorInstance} gainNode={gainNode} updateInstrument={updateInstrument} updateReverbLevel={updateReverbLevel} updateDelay={updateDelay} updateDistortion={updateDistortion} updateSongSpeed={updateSongSpeed} basslines={basslines} setBassLines={setBassLines} procText={procText} procAndPlay={procAndPlay}/>
         </main>
     );
 }
