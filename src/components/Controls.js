@@ -3,6 +3,7 @@ import upload_icon from '../Assets/upload_icon.svg';
 import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState } from "react";
+import { set } from '@strudel/core';
 
 export default function Controls({ globalEditor, gainNode, updateInstrument, updateReverbLevel, updateDelay, updateDistortion, updateSongSpeed, basslines, setBassLines,  procText, procAndPlay}) {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -68,7 +69,7 @@ export default function Controls({ globalEditor, gainNode, updateInstrument, upd
     }, [songSpeed]);
 
     const saveSettings = () => {
-        const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel};
+        const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel, basslines};
         localStorage.setItem('strudelSettings', JSON.stringify(settings));
         alert("Settings saved!");
     };
@@ -86,6 +87,8 @@ export default function Controls({ globalEditor, gainNode, updateInstrument, upd
         setEffects(settings.effects);
         setReverbLevel(settings.reverbLevel);
         setIsMuted(settings.isMuted);
+        setBassLines(settings.basslines);
+        procAndPlay();
         alert("Settings loaded!");
     };
 
@@ -114,6 +117,8 @@ export default function Controls({ globalEditor, gainNode, updateInstrument, upd
         <nav className="container-fluid">
             <div className="row">
                 <div className="col">
+                    <button className="btn btn-outline-primary" onClick={procText}>Preprocess</button>
+                    <button className="btn btn-outline-primary" onClick={procAndPlay}>Proc & Play</button>
                     <button className="btn btn-outline-primary" onClick={play}>▶</button>
                     <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
                     <button className="btn btn-outline-primary" onClick={restart}>↻</button>
