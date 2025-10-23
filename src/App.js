@@ -1,12 +1,12 @@
 import './App.css';
 import StrudelEditor from './components/StrudelEditor';
-import icon from './Assets/icon.png';
+import logo from './Assets/logo.svg'
 
 function App() {
     return (
         <div className="App container-fluid">
             <h2>
-                <img src={icon} alt="App Icon" style={{width:'90px', marginRight: '10px'}} />
+                <img src={logo} alt="App Icon" style={{width:'140px'}} />
                 Strudel Web App
             </h2>
             <StrudelEditor />
