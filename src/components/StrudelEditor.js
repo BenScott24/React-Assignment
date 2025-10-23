@@ -68,7 +68,7 @@ export default function StrudelEditor() {
             const procText = () => {
                 if (!editorInstance) return;
                 let text = stranger_tune;
-                const replace = basslines ? "" : "_";
+                const replace = basslines ? "" : "tech:10";
                 text = text.replaceAll('<basslines>', replace)
                 editorInstance.setCode(text);
                 return text;
