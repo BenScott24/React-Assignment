@@ -62,8 +62,13 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
 
     const saveSettings = () => {
       const settings = { instrument, speedLevel, volume};
-      const blob = new Blob([JSON.stringify(settings)], {type:"application"})
-    }
+      const blob = new Blob([JSON.stringify(settings)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a")
+      a.href = url;
+      a.download = "strudel-settings.json";
+      a.click();
+    };
 
 
 
