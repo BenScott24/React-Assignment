@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
+import { evalScope, gain } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
 import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
@@ -86,6 +86,20 @@ export default function StrudelEditor() {
 
             editorInstance.setCode(code);
            };
+
+           const play = () => {
+            if (!editorInstance || !gainNode) return;
+            const audioCtx = getAudioContext();
+            audioCtx.resume().then(() => {
+              if (webaudioOutput && webaudioOutput.node) {
+                webaudioOutput.node.connect(gainNode);
+              }
+              editorInstance.evaluate();
+              setIsPlaying(true);
+            });
+           };
+
+           
 
            
     return (
