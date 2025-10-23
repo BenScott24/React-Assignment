@@ -78,7 +78,15 @@ export default function StrudelEditor() {
                 editorInstance.setCode(newCode);
             };
 
+            const updateDelay = (enabled) => {
+                if (!editorInstance) return;
+                const code = editorInstance.getCode();
+                const newCode = enabled ? code.replace(/\.delay\([^)]*\)/g, `.delay(0.3)`) : code.replace(/\.delay\([^)]*\)/g, "");
+                editorInstance.setCode(newCode);
+            };
             
+
+
 
     return (
         <main className="editor-container">
