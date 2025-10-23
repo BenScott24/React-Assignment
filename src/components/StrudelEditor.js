@@ -84,7 +84,23 @@ export default function StrudelEditor() {
                 const newCode = enabled ? code.replace(/\.delay\([^)]*\)/g, `.delay(0.3)`) : code.replace(/\.delay\([^)]*\)/g, "");
                 editorInstance.setCode(newCode);
             };
-            
+
+            const updateDistortion = (enabled) => {
+                if (!editorInstance) return;
+                const code = editorInstance.getCode();
+                const newCode = enabled ? code.replace(/\.dfb\([^)]*\)/g, `.dfb(0.6)`) : code.replace(/\.dfb\([^)]*\)/g, "");
+                editorInstance.setCode(newCode);
+            };
+
+            const updateSongSpeed = (speed) => {
+                if (!editorInstance) return;
+                const code = editorInstance.getCode();
+                const newCode = code.replace(/\.slow\([^)]*\)/g, `.slow(${1 / speed})`);
+                editorInstance.setCode(newCode);
+            };
+
+
+
 
 
 
@@ -92,7 +108,7 @@ export default function StrudelEditor() {
         <main className="editor-container">
             <div id="editor" />
             <CanvasRoll />
-            <Controls globalEditor={editorInstance} gainNode={gainNode}/>
+            <Controls globalEditor={editorInstance} gainNode={gainNode} updateInstrument={updateInstrument} updateReverbLevel={updateReverbLevel} updateDelay={updateDelay} updateDistortion={updateDistortion} updateSongSpeed={updateSongSpeed}/>
         </main>
     );
 }
