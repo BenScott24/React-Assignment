@@ -64,6 +64,13 @@ export default function StrudelEditor() {
            
             }, []);
 
+            const updateInstrument = (instrument) => {
+                if (!editorInstance) return;
+                const code = editorInstance.getCode();
+                const newCode = code.replace(/s\("gm_[^"]*"\)/g, `s("gm_${instrument}")`);
+                editorInstance.setCode(newCode);
+            };
+
     return (
         <main className="editor-container">
             <div id="editor" />
