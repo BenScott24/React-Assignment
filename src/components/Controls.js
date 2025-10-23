@@ -1,21 +1,15 @@
 import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
-import volume_on from '../Assets/volume_on.svg';
-import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState } from "react";
-import { set } from '@strudel/core';
 
-export default function Controls({ globalEditor, gainNode, updateInstrument, updateReverbLevel, updateDelay, updateDistortion, updateSongSpeed, basslines, setBassLines,  procText, procAndPlay}) {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [volume, setVolume] = useState(1);
-    const [songSpeed, setSongSpeed] = useState(1);
-    const [isMuted, setIsMuted] = useState(false);
-    const [instrument, setInstrument] = useState('piano');
-    const [effects, setEffects] = useState({reverb: false, delay: false, distortion: false});
-    const [reverbLevel, setReverbLevel] = useState(0.3);
-    const [showAdvanced, setShowAdvanced] = useState(false);
+export default function Controls({ globalEditor, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
 
-    const play = () => {
+  useEffect(() => {
+    if (!gainNode) return;
+    gainNode.gain.value = volume;
+  }, [volume,gainNode]);
+
+  const play = () => {
         if (!globalEditor) return;
         try {
             globalEditor.evaluate();
@@ -46,27 +40,39 @@ export default function Controls({ globalEditor, gainNode, updateInstrument, upd
         }
     };
 
-    useEffect(() => {
-        if (!gainNode) return;
-        gainNode.gain.value = isMuted ? 0 : volume;
-    }, [volume, isMuted, gainNode]);
+   useEffect(() => {
+        const handleKey = (input) => {
+            if (!globalEditor) return;
 
-    useEffect(() => {
-        if (updateInstrument) updateInstrument(instrument);
-    }, [instrument]);
+            if (input.code == "Space") {
+                input.preventDefault();
+                if (isPlaying) stop();
+                else play ();
+            }
 
-    useEffect(() => {
-        if (updateReverbLevel) updateReverbLevel(reverbLevel);
-    }, [reverbLevel]);
+            if (input.code == "ArrowLeft") {
+                input.preventDefault();
+                restart();
+            }
+        };
 
-    useEffect(() => {
-        if (updateDelay) updateDelay(effects.delay);
-        if (updateDistortion) updateDistortion(effects.distortion);
-    }, [effects]);
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [globalEditor, isPlaying]);
 
-    useEffect(() => {
-        if (updateSongSpeed) updateSongSpeed(songSpeed);
-    }, [songSpeed]);
+    const saveSettings = () => {
+      const settings = { instrument, speedLevel, volume};
+      const blob = new Blob([JSON.stringify(settings)], {type:"application"})
+    }
+
+
+
+
+
+
+}
+
+   
 
     const saveSettings = () => {
         const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel, basslines};
