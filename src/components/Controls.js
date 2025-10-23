@@ -146,11 +146,10 @@ export default function Controls({ globalEditor, gainNode }) {
                             <input id ="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))} />
                             <h5 className="mt-3">Reverb Level</h5>
                             <input id="reverbSlider" type="range" min="0" max="1" step="0.01" value={reverbLevel} onChange={(input) => setReverbLevel(parseFloat(input.target.value))} />
-                            <
+                            <h5 className="mt-3">Song Speed</h5>
+                            <input id="speeedSlider" type="range" min="0" max="1" step="0.01" value={songSpeed} onChange={(input) => setSongSpeed(parseFloat(input.target.value))} />
                         </div>
                     </div>
-                    
-
                 </div>
             )}
         </nav> 
