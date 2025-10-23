@@ -68,62 +68,24 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
       a.href = url;
       a.download = "strudel-settings.json";
       a.click();
+      alert("Settings Saved")
     };
 
+    const loadSettings = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const data = JSON.parse(reader.result);
+        setInstrument(data.instrument);
+        setSpeedLevel(data.setSpeedLevel);
+        setVolume(data.volume);
+        alert("Settings Loaded")
+      };
+      reader.readAsText(file);
+    }; 
 
 
-
-
-
-}
-
-   
-
-    const saveSettings = () => {
-        const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel, basslines};
-        localStorage.setItem('strudelSettings', JSON.stringify(settings));
-        alert("Settings saved!");
-    };
-
-    const loadSettings = () => {
-        const saved = localStorage.getItem('strudelSettings');
-        if (!saved) {
-            alert("No saved settings found!");
-            return;
-        }
-        const settings = JSON.parse(saved);
-        setVolume(settings.volume);
-        setSongSpeed(settings.songSpeed);
-        setInstrument(settings.instrument);
-        setEffects(settings.effects);
-        setReverbLevel(settings.reverbLevel);
-        setIsMuted(settings.isMuted);
-        setBassLines(settings.basslines);
-        procAndPlay();
-        alert("Settings loaded!");
-    };
-
-    useEffect(() => {
-        const handleKey = (input) => {
-            if (!globalEditor) return;
-
-            if (input.code == "Space") {
-                input.preventDefault();
-                if (isPlaying) stop();
-                else play ();
-            }
-
-            if (input.code == "ArrowLeft") {
-                input.preventDefault();
-                restart();
-            }
-        };
-
-        window.addEventListener("keydown", handleKey);
-        return () => window.removeEventListener("keydown", handleKey);
-    }, [globalEditor, isPlaying]);
-
-    
     return (
         <nav className="container-fluid">
             <div className="row">
