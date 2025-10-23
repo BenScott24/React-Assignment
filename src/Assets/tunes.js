@@ -1,41 +1,100 @@
-export const the_rhythm_of_the_night = `
-// "The Rhythm Of The Night" - Work In Progress
-// song @by Corona
-// script @by eeefano
-setDefaultVoicings('legacy')
-const as = register('as', (mapping, pat) => { mapping = Array.isArray(mapping) ? mapping : [mapping];
-  return pat.fmap((v) => { v = Array.isArray(v) ? v : [v, 0];
-    return Object.fromEntries(mapping.map((prop, i) => [prop, v[i]])); }); });
+export const stranger_tune = `setcps(140/60/4)
 
-const crdpart = "<~ 0@10 1@24 0@19>".pickRestart(
-["Ab Cm Bb F@2".slow(5)
-,"Bb@3 Ab@3 Cm@2".slow(8)
-]);
-stack 
-("<0 1@4 0 1@4 ~@8 2 3@7 2 3@7 0 1@4 0 1@4 0 1@4 0 1@4>".pickRestart(
-  ["~ [4@3 ~]!3 7:5 6 4 3"
-  ,"2:-1 0:-2 ~@4 6:1 4:-1 6 4:2 ~@4 [4:2 3]@3 ~@6 4 7:5 6 [4@2 ~] [3:-1 2@3]@2 0 ~@2".slow(4)
-  ,"~@6 [6 ~]!2"
-  ,"6 5@0.5 [5 ~] [4 ~]!2 [3 ~] 3:2@1.5 ~@7 6@2 6:2 [5 ~ ]!2 4 3@2 4 2 0:-2 ~@7 [0 2]@3 3@2 4 6:4 4:-4 ~ 0 2 0 4 ~ 0 0:2@2 ~@7".slow(7)
-]).as("n:penv").scale("c4:minor").patt("0.07").s("gm_lead_1_square").room(0.4).delay(0.3).dfb(0.35).dt(60/128).gain(0.85)
+samples('github:algorave-dave/samples')
+samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
+samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-,crdpart.chord().anchor("F4").voicing().s("gm_synth_strings_1").color("blue").gain(0.4)
+const gain_patterns = [
+  "2",
+  "{0.75 2.5}*4",
+    "{0.75 2.5!9 0.75 2.5!5 0.75 2.5 0.75 2.5!7 0.75 2.5!3 <2.5 0.75> 2.5}%16",
+]
 
-,"<~@11 1@23 ~ 0@19>".pickRestart(
-  ["2 ~@2 2 ~@2 2 ~@3 2 ~@3 2 ~"
-  ,"[2 ~@2 2 ~@2 2 ~]!2"
-]).n().chord(crdpart).anchor(crdpart.rootNotes(2)).voicing().s("gm_synth_bass_1").lpf(1500).room(0.5).color("green").gain(0.9)
+const drum_structure = [
+"~",
+"x*4",
+"{x ~!9 x ~!5 x ~ x ~!7 x ~!3 < ~ x > ~}%16",
+]
 
-,"<~@11 1@8 ~@16 0@19>".pickRestart(
-  ["<5 7 6 3!2> ~ 9 ~ 10 ~ ~ 12 ~ 11 ~ 10 ~ 11 9 ~"
-  ,"<6!3 5!3 7!2> ~ 9 ~ 10 ~ ~ 12 ~ 11 ~ 10 ~ 11 9 ~"
-]).scale("c3:minor").note().s("gm_lead_2_sawtooth").room(0.3).delay(0.3).dfb(0.5).dt(60/128*2).color("red").gain(0.6)
+const basslines = [
+  "[[eb1, eb2]!16 [f2, f1]!16 [g2, g1]!16 [f2, f1]!8 [bb2, bb1]!8]/8",
+  "[[eb1, eb2]!16 [bb2, bb1]!16 [g2, g1]!16 [f2, f1]!4 [bb1, bb2]!4 [eb1, eb2]!4 [f1, f2]!4]/8"
+]
 
-,"<[2,3] ~@10 0@6 [0,1]@2 [0,2] 0@5 [0,1]@2 [0,2] 0@6 [2,3] 0@8 [0,1]@2 [0,2] 0@8>".pickRestart(
- [stack(s("bd*4").gain(0.8),s("[~ oh]*4").gain(0.14),s("hh*16").gain(0.09),s("[~ cp]*2").gain(0.4))
- ,s("[~ sd!3]!4 [sd*4]!4").slow(2).gain(run(32).slow(2).mul(1/31).add(0.1).mul(0.4))
- ,s("cr").gain(0.2)
- ,s("bd").gain(0.8)
- ]).bank("RolandTR909").room(0.2).color("yellow").velocity(1)
- 
-).cpm(128/4)`
+const arpeggiator1 = [
+"{d4 bb3 eb3 d3 bb2 eb2}%16",
+"{c4 bb3 f3 c3 bb2 f2}%16",
+"{d4 bb3 g3 d3 bb2 g2}%16",
+"{c4 bb3 f3 c3 bb2 f2}%16",
+]
+
+const arpeggiator2 = [
+"{d4 bb3 eb3 d3 bb2 eb2}%16",
+"{c4 bb3 f3 c3 bb2 f2}%16",
+"{d4 bb3 g3 d3 bb2 g2}%16",
+"{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16",
+]
+
+
+const pattern = 0
+const bass = 0
+
+bassline:
+note(pick(basslines, bass))
+.sound("supersaw")
+.postgain(2)
+.room(0.6)
+.lpf(700)
+.room(0.4)
+.postgain(pick(gain_patterns, pattern))
+
+
+main_arp: 
+note(pick(arpeggiator1, "<0 1 2 3>/2"))
+.sound("supersaw")
+.lpf(300)
+.adsr("0:0:.5:.1")
+.room(0.6)
+.lpenv(3.3)
+.postgain(pick(gain_patterns, pattern))
+
+
+drums:
+stack(
+  s("tech:5")
+  .postgain(6)
+  .pcurve(2)
+  .pdec(1)
+  .struct(pick(drum_structure, pattern)),
+
+  s("sh").struct("[x!3 ~!2 x!10 ~]")
+  .postgain(0.5).lpf(7000)
+  .bank("RolandTR808")
+  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),
+
+  s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
+  .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
+  .postgain(.25),
+)
+
+drums2: 
+stack(
+  s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
+  s("hh").struct("x*16").bank("RolandTR808")
+  .gain(0.6)
+  .jux(rev)
+  .room(sine.range(0.1,0.4))
+  .postgain(0.5),
+  
+  s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
+  .gain(0.1)
+  .postgain(pick(gain_patterns, pattern))
+  .hpf(1000)
+  .speed(0.5)
+  .rarely(jux(rev)),
+)
+//Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
+// all(x => x.gain(mouseX.range(0,1)))
+// all(x => x.log())
+
+// @version 1.2`;

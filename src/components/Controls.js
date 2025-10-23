@@ -10,11 +10,7 @@ export default function Controls({ globalEditor, gainNode, updateInstrument, upd
     const [songSpeed, setSongSpeed] = useState(1);
     const [isMuted, setIsMuted] = useState(false);
     const [instrument, setInstrument] = useState('piano');
-    const [effects, setEffects] = useState({
-        reverb: false,
-        delay: false,
-        distortion: false,
-    });
+    const [effects, setEffects] = useState({reverb: false, delay: false, distortion: false});
     const [reverbLevel, setReverbLevel] = useState(0.3);
     const [showAdvanced, setShowAdvanced] = useState(false);
 
