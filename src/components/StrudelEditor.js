@@ -67,14 +67,22 @@ export default function StrudelEditor() {
            
             }, []);
 
-            const procText = () => {
-                if (!editorInstance) return;
-                let text = stranger_tune;
-                const replace = basslines ? "" : "tech:10";
-                text = text.replaceAll('<basslines>', replace)
-                editorInstance.setCode(text);
-                return text;
-            };
+           const applySettings = () => {
+            if (!editorInstance) return;
+            let code = stranger_tune;
+
+            if (instrument === "drums") {
+              code = code.replace(/bassline:[\s\S]*?main_arp:/,"drums:\nstack(\n s(\"tech:5\")\n .postgain(6)\n .pcurve(2)\n .pdec(1)\n .struct(pick(drum_structure, 0)),\n");
+            }
+            if (instrument === "synth") {
+              code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
+            }
+            if (instrument === "bass") {
+              code = code.replace(/bassline:[\s\S]*?main_arp:/,"bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
+            }
+
+            const speedMap
+           }
 
             const procAndPlay = () => {
                 procText();
