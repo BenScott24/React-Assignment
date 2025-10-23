@@ -2,63 +2,24 @@ import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
 import { useEffect, useState } from "react";
 
-export default function Controls({ globalEditor, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
-
+export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
+    const [showAdvanced, setShowAdvanced] = useState(false);
+  
   useEffect(() => {
     if (!gainNode) return;
     gainNode.gain.value = volume;
   }, [volume,gainNode]);
 
-  const play = () => {
-        if (!globalEditor) return;
-        try {
-            globalEditor.evaluate();
-            setIsPlaying(true);
-        } catch (error) {
-            console.error("Could not play the song: ", error);
-        }
-    };
-
-    const stop = () => {
-        if (!globalEditor) return;
-        try {
-            globalEditor.stop();
-            setIsPlaying(false);
-        } catch (error) {
-            console.error("Could not stop the song: ", error);
-        }
-    };
-
-    const restart = () => {
-        if (!globalEditor) return;
-        try {
-            globalEditor.stop();
-            globalEditor.evaluate();
-            setIsPlaying(true);
-        } catch (error) {
-            console.error("Could not restart the song: ", error);
-        }
-    };
-
+  
    useEffect(() => {
         const handleKey = (input) => {
-            if (!globalEditor) return;
-
-            if (input.code == "Space") {
-                input.preventDefault();
-                if (isPlaying) stop();
-                else play ();
-            }
-
-            if (input.code == "ArrowLeft") {
-                input.preventDefault();
-                restart();
-            }
+            if (input.code == "Space") { input.preventDefault(); playPause(); }
+            if (input.code == "ArrowLeft") { input.preventDefault(); restart(); }
         };
 
         window.addEventListener("keydown", handleKey);
         return () => window.removeEventListener("keydown", handleKey);
-    }, [globalEditor, isPlaying]);
+    }, [playPause, restart]);
 
     const saveSettings = () => {
       const settings = { instrument, speedLevel, volume};
@@ -90,8 +51,7 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
         <nav className="container-fluid">
             <div className="row">
                 <div className="col">
-                    <button className="btn btn-outline-primary" onClick={play}>▶</button>
-                    <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
+                    <button className="btn btn-outline-primary" onClick={playPause}>{isPlaying ? "⏸" : "▶"}</button>
                     <button className="btn btn-outline-primary" onClick={restart}>↻</button>
                     <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
                     <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
@@ -118,7 +78,7 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
                             <h5>Volume</h5>
                             <input id ="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))} />
                             <h5>Song Speed</h5>
-                            <input id="speedSlider" type="number" min="1" max="5" value={speedLevel} onChange={(input) => setSpeedLevel(Math.min(5, Math.max(1, parseInt(input.target.value))))} />
+                            <input type="range" min="0.25" max="5" step="0.05" value={speedLevel} onChange={(input) => setSpeedLevel(parseFloat(input.target.value))} />
                         </div>
                     </div>
                 </div>
