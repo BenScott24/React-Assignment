@@ -90,16 +90,11 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
         <nav className="container-fluid">
             <div className="row">
                 <div className="col">
-                    <button className="btn btn-outline-primary" onClick={procText}>Preprocess</button>
-                    <button className="btn btn-outline-primary" onClick={procAndPlay}>Proc & Play</button>
                     <button className="btn btn-outline-primary" onClick={play}>▶</button>
                     <button className="btn btn-outline-primary" onClick={stop}>⏸</button>
                     <button className="btn btn-outline-primary" onClick={restart}>↻</button>
                     <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
                     <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
-                    <button className="btn" onClick={() => setIsMuted(!isMuted)}>
-                        <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume"/>
-                    </button>
                     <button className="btn btn-outline-primary" type="button" onClick={() => setShowAdvanced(!showAdvanced)} > {showAdvanced ? "Hide Advanced Controls ▲": "Show Advanced Controls ▼"}</button>
                 </div>
             </div>
@@ -107,54 +102,26 @@ export default function Controls({ globalEditor, instrument, setInstrument, spee
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col">
-                            <h5><strong>Bassline Mode</strong></h5>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="basslineRadio" checked={basslines} onChange={() => { setBassLines(true); procAndPlay();}} />
-                                <label className="form-check-label">Bassline: ON</label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="basslineRadio" checked={!basslines} onChange={() => { setBassLines(false); procAndPlay();}} />
-                                <label className="form-check-label">Bassline: OFF</label>                            
-                        </div>
-                    </div>
-                </div>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col">
                             <h5><strong>Instruments</strong></h5>
-                            {["piano", "guitar", "drums"].map((instruments) => (
+                            <div className="form-check">
+                              {["drums","synth","bass"].map((instruments) => (
                                 <div className="form-check" key={instruments}>
-                                    <input className="form-check-input" type="radio" name="instrument" value={instruments} checked ={instrument === instruments} onChange={(input) => setInstrument(input.target.value)} />
-                                    <label className="form-check-label text-white">
-                                        {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
-                                    </label>
-                                </div>
-                            ))}
+                                <label className="form-check-label text-white" key={instruments}>
+                                  <input type="radio" name="instrument" value={instruments} checked={instrument === instruments} onChange={() => setInstrument(instruments)} />
+                                  {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
+                                </label>
+                              </div>
+                              ))}                              
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <h5><strong>Effects</strong></h5>
-                            {Object.keys(effects).map((soundEffects) => (
-                                <div className="form-check" key={soundEffects}>
-                                    <input className="form-check-input" type="checkbox" checked={effects[soundEffects]} onChange={(input) => setEffects({ ...effects, [soundEffects]: input.target.checked})} />
-                                    <label className="form-check-label text-white"> 
-                                        {soundEffects.charAt(0).toUpperCase() + soundEffects.slice(1)}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="row">
+                        <div className="row">
                         <div className="col">
                             <h5>Volume</h5>
                             <input id ="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))} />
-                            <h5>Reverb Level</h5>
-                            <input id="reverbSlider" type="range" min="0" max="1" step="0.01" value={reverbLevel} onChange={(input) => setReverbLevel(parseFloat(input.target.value))} />
                             <h5>Song Speed</h5>
-                            <input id="speedSlider" type="range" min="0" max="2" step="0.01" value={songSpeed} onChange={(input) => setSongSpeed(parseFloat(input.target.value))} />
+                            <input id="speedSlider" type="number" min="1" max="5" value={speedLevel} onChange={(input) => setSpeedLevel(Math.min(5, Math.max(1, parseInt(input.target.value))))} />
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
             )}
