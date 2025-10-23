@@ -4,7 +4,7 @@ import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState } from "react";
 
-export default function Controls({ globalEditor, gainNode }) {
+export default function Controls({ globalEditor, gainNode, updateInstrument, updateReverbLevel, updateDelay, updateDistortion, updateSongSpeed }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
     const [songSpeed, setSongSpeed] = useState(1);
@@ -53,6 +53,23 @@ export default function Controls({ globalEditor, gainNode }) {
         if (!gainNode) return;
         gainNode.gain.value = isMuted ? 0 : volume;
     }, [volume, isMuted, gainNode]);
+
+    useEffect(() => {
+        if (updateInstrument) updateInstrument(instrument);
+    }, [instrument]);
+
+    useEffect(() => {
+        if (updateReverbLevel) updateReverbLevel(reverbLevel);
+    }, [reverbLevel]);
+
+    useEffect(() => {
+        if (updateDelay) updateDelay(effects.delay);
+        if (updateDistortion) updateDistortion(effects.distortion);
+    }, [effects]);
+
+    useEffect(() => {
+        if (updateSongSpeed) updateSongSpeed(songSpeed);
+    }, [songSpeed]);
 
     const saveSettings = () => {
         const settings = {volume, songSpeed, isMuted, instrument, effects, reverbLevel};
