@@ -81,54 +81,13 @@ export default function StrudelEditor() {
               code = code.replace(/bassline:[\s\S]*?main_arp:/,"bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
             }
 
-            const speedMap
-           }
+            const speedMap = {1: 1, 2: 1.5, 3: 2, 4: 3, 5: 4};
+            code = code.replace(/setcps\([^\)]*\)/,`setcps(${140/60/4 * speedMap[speedLevel]})`);
 
-            const procAndPlay = () => {
-                procText();
-                editorInstance?.evaluate();
-            }
+            editorInstance.setCode(code);
+           };
 
-            const updateInstrument = (instrument) => {
-                if (!editorInstance) return;
-                const code = editorInstance.getCode();
-                const newCode = code.replace(/s\("gm_[^"]*"\)/g, `s("gm_${instrument}")`);
-                editorInstance.setCode(newCode);
-            };
-
-            const updateReverbLevel = (level) => {
-                if (!editorInstance) return;
-                const code = editorInstance.getCode();
-                const newCode = code.replace(/\.room\([^)]*\)/g, `.room(${level})`);
-                editorInstance.setCode(newCode);
-            };
-
-            const updateDelay = (enabled) => {
-                if (!editorInstance) return;
-                const code = editorInstance.getCode();
-                const newCode = enabled ? code.replace(/\.delay\([^)]*\)/g, `.delay(0.3)`) : code.replace(/\.delay\([^)]*\)/g, "");
-                editorInstance.setCode(newCode);
-            };
-
-            const updateDistortion = (enabled) => {
-                if (!editorInstance) return;
-                const code = editorInstance.getCode();
-                const newCode = enabled ? code.replace(/\.dfb\([^)]*\)/g, `.dfb(0.6)`) : code.replace(/\.dfb\([^)]*\)/g, "");
-                editorInstance.setCode(newCode);
-            };
-
-            const updateSongSpeed = (speed) => {
-                if (!editorInstance) return;
-                const code = editorInstance.getCode();
-                const newCode = code.replace(/\.slow\([^)]*\)/g, `.slow(${1 / speed})`);
-                editorInstance.setCode(newCode);
-            };
-
-
-
-
-
-
+           
     return (
         <main className="editor-container">
             <div id="editor" />
