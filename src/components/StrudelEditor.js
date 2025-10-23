@@ -99,7 +99,25 @@ export default function StrudelEditor() {
             });
            };
 
-           
+           const pause = () => {
+            if (!editorInstance) return;
+            editorInstance.stop();
+            setIsPlaying(false);
+           };
+
+           const restart = () => {
+            if (!editorInstance || !gainNode) return;
+            applySettings();
+            const audioCtx = getAudioContext();
+            audioCtx.resume().then(() => {
+              editorInstance.stop();
+              editorInstance.evaluate();
+              setIsPlaying(true);
+            })
+           }
+
+
+
 
            
     return (
