@@ -4,7 +4,7 @@ import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState } from "react";
 
-export default function Controls({ globalEditor, gainNode, updateInstrument, updateReverbLevel, updateDelay, updateDistortion, updateSongSpeed }) {
+export default function Controls({ globalEditor, gainNode, updateInstrument, updateReverbLevel, updateDelay, updateDistortion, updateSongSpeed, basslines, setBassLines,  procText, procAndPlay}) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
     const [songSpeed, setSongSpeed] = useState(1);
