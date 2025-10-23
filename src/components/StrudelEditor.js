@@ -14,7 +14,10 @@ export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
     const [gainNode, setGainNode] = useState(null);
-    const [basslines, setBassLines] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [instrument, setInstrument] = useState("drums");
+    const [speedLevel, setSpeedLevel] = useState(1);
+    const [volume, setVolume] = useState(1);
 
     useEffect(() => {
     
@@ -33,7 +36,7 @@ export default function StrudelEditor() {
 
                 const audioCtx = getAudioContext();
                 const gain = audioCtx.createGain();
-                gain.gain.value = 1;
+                gain.gain.value = volume;
                 gain.connect(audioCtx.destination);
                 setGainNode(gain);
 
