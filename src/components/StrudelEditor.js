@@ -71,6 +71,15 @@ export default function StrudelEditor() {
                 editorInstance.setCode(newCode);
             };
 
+            const updateReverbLevel = (level) => {
+                if (!editorInstance) return;
+                const code = editorInstance.getCode();
+                const newCode = code.replace(/\.room\([^)]*\)/g, `.room(${level})`);
+                editorInstance.setCode(newCode);
+            };
+
+            
+
     return (
         <main className="editor-container">
             <div id="editor" />
