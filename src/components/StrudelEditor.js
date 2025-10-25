@@ -67,13 +67,13 @@ export default function StrudelEditor() {
            
             }, []);
 
-           useEffect(() => {
+           const applySettings = () => {
             if (!editorInstance) return;
-
             let code = stranger_tune;
 
-            if (instrument === "drums") {
-              code = code.replace(/bassline:[\s\S]*?main_arp:/,"drums:\nstack(\n s(\"tech:5\")\n .postgain(6)\n .pcurve(2)\n .pdec(1)\n .struct(pick(drum_structure, 0)),\n");
+             if (instrument === "drums") {
+              code = code.replace(/bassline:[\s\S]*?main_arp:/, "drums:\nstack(\n  s(\"tech:5\")\n  .postgain(6)\n  .pcurve(2)\n  .pdec(1)\n  .struct(pick(drum_structure, 0)),\n)");
+
             } else if (instrument === "synth") {
               code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
             } else if (instrument === "bass") {
@@ -84,7 +84,7 @@ export default function StrudelEditor() {
             code = code.replace(/setcps\([^\)]*\)/,`setcps(${baseCPS * speedLevel})`);
 
             editorInstance.setCode(code);
-           }, [instrument, speedLevel, editorInstance]);
+           };
 
            const playPause = () => {
             if (!editorInstance || !gainNode) return;
@@ -94,6 +94,7 @@ export default function StrudelEditor() {
                 editorInstance.stop();
                 setIsPlaying(false);
               } else {
+                applySettings();
                 if (webaudioOutput && webaudioOutput.node) webaudioOutput.node.connect(gainNode);
                 editorInstance.evaluate();
                 setIsPlaying(true);
@@ -103,6 +104,7 @@ export default function StrudelEditor() {
 
            const restart = () => {
             if (!editorInstance || !gainNode) return;
+            applySettings();
             const audioCtx = getAudioContext();
             audioCtx.resume().then(() => {
               editorInstance.stop();

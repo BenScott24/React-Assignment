@@ -1,14 +1,17 @@
 import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
+import volume_on from '../Assets/volume_on.svg';
+import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState } from "react";
 
 export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
     const [showAdvanced, setShowAdvanced] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
   
   useEffect(() => {
     if (!gainNode) return;
-    gainNode.gain.value = volume;
-  }, [volume,gainNode]);
+    gainNode.gain.value = isMuted ? 0 : 1;
+  }, [isMuted,gainNode]);
 
   
    useEffect(() => {
@@ -20,6 +23,10 @@ export default function Controls({ playPause, restart, instrument, setInstrument
         window.addEventListener("keydown", handleKey);
         return () => window.removeEventListener("keydown", handleKey);
     }, [playPause, restart]);
+
+    const toggleMute = () => {
+      setIsMuted(!isMuted);
+    };
 
     const saveSettings = () => {
       const settings = { instrument, speedLevel, volume};
@@ -55,6 +62,9 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                     <button className="btn btn-outline-primary" onClick={restart}>↻</button>
                     <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
                     <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
+                    <button className="btn" onClick={toggleMute}>
+                      <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume" /> 
+                    </button>
                     <button className="btn btn-outline-primary" type="button" onClick={() => setShowAdvanced(!showAdvanced)} > {showAdvanced ? "Hide Advanced Controls ▲": "Show Advanced Controls ▼"}</button>
                 </div>
             </div>
@@ -75,8 +85,6 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                         </div>
                         <div className="row">
                         <div className="col">
-                            <h5>Volume</h5>
-                            <input id ="volumeSlider" type="range" min="0" max="1" step="0.01" value={volume} onChange={(input) => setVolume(parseFloat(input.target.value))} />
                             <h5>Song Speed</h5>
                             <input type="range" min="0.25" max="5" step="0.05" value={speedLevel} onChange={(input) => setSpeedLevel(parseFloat(input.target.value))} />
                         </div>
