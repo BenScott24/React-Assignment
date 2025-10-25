@@ -142,3 +142,23 @@ body, .App {
   margin: 2px 0;
   font-size: 0.9rem;
 }
+
+.form-check input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #101010;
+  border: 2px solid #0a2a66;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+}
+
+.form-check input[type="radio"]:checked {
+  background-color: #0a2a66;
+  box-shadow: 0 0 8x rgba(0, 255, 153, 0.4);
+}
