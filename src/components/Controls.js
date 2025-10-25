@@ -78,14 +78,12 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                     <div className="row">
                         <div className="col">
                             <h5><strong>Instruments</strong></h5>
-                            <div className="form-check">
                               {["drums","synth","bass"].map((instruments) => (
-                                <div className="form-check" key={instruments}>
-                                <label className="form-check-label text-white" key={instruments}>
+                                <label className="form-check" key={instruments}>
                                   <input type="radio" name="instrument" value={instruments} checked={instrument === instruments} onChange={() => setInstrument(instruments)} />
                                   {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
                                 </label>
-                              </div>
+                          
                               ))}                              
                         </div>
                         <div className="row">
@@ -96,7 +94,6 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                     </div>
                 </div>
                 </div>
-            </div>
             )}
         </nav> 
     );
