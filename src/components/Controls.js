@@ -2,16 +2,17 @@ import save_icon from '../Assets/save_icon.svg';
 import upload_icon from '../Assets/upload_icon.svg';
 import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
     const [showAdvanced, setShowAdvanced] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
-  
+    const fileInputRef = useRef();
+
   useEffect(() => {
     if (!gainNode) return;
-    gainNode.gain.value = isMuted ? 0 : 1;
-  }, [isMuted,gainNode]);
+    gainNode.gain.value = isMuted ? 0 : volume;
+  }, [isMuted,gainNode, volume]);
 
   
    useEffect(() => {
@@ -24,10 +25,7 @@ export default function Controls({ playPause, restart, instrument, setInstrument
         return () => window.removeEventListener("keydown", handleKey);
     }, [playPause, restart]);
 
-    const toggleMute = () => {
-      setIsMuted(!isMuted);
-
-    };
+    const toggleMute = () => setIsMuted(!isMuted);
 
     const saveSettings = () => {
       const settings = { instrument, speedLevel, volume};
@@ -58,6 +56,7 @@ export default function Controls({ playPause, restart, instrument, setInstrument
       reader.readAsText(file);
     }; 
 
+    const handleLoadClick = () => fileInputRef.current.click();
 
     return (
         <nav className="container-fluid">
@@ -66,7 +65,8 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                     <button className="btn btn-outline-primary" onClick={playPause}>{isPlaying ? "⏸" : "▶"}</button>
                     <button className="btn btn-outline-primary" onClick={restart}>↻</button>
                     <button className="btn" onClick={saveSettings}><img src={save_icon} className="btn-icon" alt="Save"/></button>
-                    <button className="btn" onClick={loadSettings}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
+                    <button className="btn" onClick={handleLoadClick}><img src={upload_icon} className="btn-icon" alt="Load"/></button>
+                    <input type="file" accept=".json" style={{ display: "none"}} ref={fileInputRef} onChange={loadSettings} />
                     <button className="btn" onClick={toggleMute}>
                       <img src={isMuted ? volume_off : volume_on} className="btn-icon" alt="Volume" /> 
                     </button>
