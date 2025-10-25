@@ -26,6 +26,7 @@ export default function Controls({ playPause, restart, instrument, setInstrument
 
     const toggleMute = () => {
       setIsMuted(!isMuted);
+
     };
 
     const saveSettings = () => {
@@ -44,11 +45,15 @@ export default function Controls({ playPause, restart, instrument, setInstrument
       if (!file) return;
       const reader = new FileReader();
       reader.onload = () => {
-        const data = JSON.parse(reader.result);
-        setInstrument(data.instrument);
-        setSpeedLevel(data.setSpeedLevel);
-        setVolume(data.volume);
-        alert("Settings Loaded")
+        try {
+          const data = JSON.parse(reader.result);
+          if (data.instrument) setInstrument(data.instrument);
+          if (data.speedLevel) setSpeedLevel(data.speedLevel);
+          if (data.volume) setVolume(data.volume);
+          alert("Settings Loaded")
+        } catch {
+          alert("Failed to load settings: Invalid File");
+        }
       };
       reader.readAsText(file);
     }; 

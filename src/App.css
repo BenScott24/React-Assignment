@@ -143,6 +143,14 @@ body, .App {
   font-size: 0.9rem;
 }
 
+.form-check {
+  display:flex;
+  align-items: left;
+  margin-bottom: 8px;
+  padding-left: 0;
+  margin-left: 0;
+}
+
 .form-check input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -152,6 +160,7 @@ body, .App {
   width: 18px;
   height: 18px;
   margin-right: 8px;
+  
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease-in-out;
