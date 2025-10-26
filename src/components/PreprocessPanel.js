@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-export default function PreprocessPanel({ defaultValue, editorInstance}) {
-    const [text, setText] = useState(defaultValue || "");
+export default function PreprocessPanel({ text, setText, editorInstance}) {
 
     useEffect(() => {
         if (!editorInstance) return; 
             editorInstance.setCode(text);
-        
     }, [text, editorInstance]);
 
     return (
