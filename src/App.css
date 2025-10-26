@@ -189,3 +189,41 @@ body, .App {
 .form-check-label:hover {
   color: #00ccff;
 }
+.preprocess-panel {
+    width: 100%;
+    background-color: #1e1e1e;
+    color:#ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+.preprocess-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color:#cccccc;
+    font-size: 14px;
+}
+
+.preprocess-textarea {
+    width: 100%;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    transition: border 0.2s, box-shawdow 0.2s;
+}
+
+.preprocess-textarea:focus {
+    border: 1px solid #888;
+    box-shadow: 0 0 6px #777;
+}

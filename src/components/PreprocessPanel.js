@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./PreprocessPanel.css"
 
 export default function PreprocessPanel({ defaultValue, editorInstance}) {
     const [text, setText] = useState(defaultValue || "");
