@@ -11,6 +11,8 @@ import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
 import PreprocessPanel from "./PreprocessPanel";
 
+let globalEditor = null;
+
 export default function StrudelEditor() {
     const hasRun = useRef(false);
     const [editorInstance, setEditorInstance] = useState(null);
@@ -31,6 +33,8 @@ export default function StrudelEditor() {
       editorInstance.evaluate();
       setIsPlaying(true);
     };
+
+    const [songText, setSongText] = useState(stranger_tune)
 
     useEffect(() => {
     
@@ -78,7 +82,8 @@ export default function StrudelEditor() {
             editor.setCode(stranger_tune);
             setEditorInstance(editor);
            
-            }, []);
+            editorInstance.setCode(songText);
+            }, [setSongText]);
 
            const applySettings = () => {
             if (!editorInstance) return;
@@ -128,7 +133,7 @@ export default function StrudelEditor() {
 
     return (
         <main className="editor-container">
-          <PreprocessPanel onProcess={handleProcess} onProcessandPlay={handleProcessandPlay}/>
+          <PreprocessPanel editorInstance={editorInstance} defaultValue={songText} />
             <div id="editor" />
             <CanvasRoll />
             <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying}/>
