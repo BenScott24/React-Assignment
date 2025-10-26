@@ -9,6 +9,7 @@ import console_monkey_patch from '../console-monkey-patch';
 import {stranger_tune} from "../Assets/tunes";
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
+import PreprocessPanel from "./PreprocessPanel";
 
 export default function StrudelEditor() {
     const hasRun = useRef(false);
@@ -18,6 +19,18 @@ export default function StrudelEditor() {
     const [instrument, setInstrument] = useState("drums");
     const [speedLevel, setSpeedLevel] = useState(1);
     const [volume, setVolume] = useState(1);
+
+    const handleProcess = (text) => {
+      if (!editorInstance) return;
+      editorInstance.setCode(text);
+    };
+
+    const handleProcessandPlay = (text) => {
+      if (!editorInstance) return;
+      editorInstance.setCode(text);
+      editorInstance.evaluate();
+      setIsPlaying(true);
+    };
 
     useEffect(() => {
     
@@ -115,6 +128,7 @@ export default function StrudelEditor() {
 
     return (
         <main className="editor-container">
+          <PreprocessPanel onProcess={handleProcess} onProcessandPlay={handleProcessandPlay}/>
             <div id="editor" />
             <CanvasRoll />
             <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying}/>
