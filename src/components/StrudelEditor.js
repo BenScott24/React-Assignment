@@ -82,8 +82,7 @@ export default function StrudelEditor() {
             editor.setCode(stranger_tune);
             setEditorInstance(editor);
            
-            editorInstance.setCode(songText);
-            }, [setSongText]);
+            }, []);
 
            const applySettings = () => {
             if (!editorInstance) return;
