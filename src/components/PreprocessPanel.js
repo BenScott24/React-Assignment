@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./PreprocessPanel.css"
 
 export default function PreprocessPanel({ defaultValue, editorInstance}) {
     const [text, setText] = useState(defaultValue || "");
@@ -10,13 +11,9 @@ export default function PreprocessPanel({ defaultValue, editorInstance}) {
     }, [text, editorInstance]);
 
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-md-8" style={{ maxHeigh:"50vh", overflowY:"auto"}} >
-                <label htmlFor="proc" className="form-label">Text to preprocess:</label>
-                <textarea id="proc" className="form-control" rows="20" value={text} onChange={(e) => setText(e.target.value)}></textarea>
-            </div>
+        <div className="preprocess-panel">
+            <label htmlFor="proc" className="preprocess-label">Text to preprocess:</label>
+            <textarea id="proc" className="preprocess-textarea" rows="20" value={text} onChange={(e) => setText(e.target.value)}></textarea>
         </div>
-    </div>
     );
 }
