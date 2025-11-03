@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds, registerSoundfonts } from '@strudel/webaudio';
+import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
+import { registerSoundfonts } from "@strudel/soundfonts";
 import console_monkey_patch from '../console-monkey-patch';
 import {stranger_tune} from "../Assets/tunes";
 import Controls from './Controls';
@@ -95,7 +96,7 @@ export default function StrudelEditor() {
            };
 
            const handleMuteToggle = (mute) => {
-            setIsMuted(muted);
+            setIsMuted(mute);
             applySettings();
            };
 
