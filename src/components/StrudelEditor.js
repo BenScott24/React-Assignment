@@ -21,6 +21,7 @@ export default function StrudelEditor() {
     const [volume, setVolume] = useState(1);
     const [text, setText] = useState(stranger_tune);
     const [isMuted, setIsMuted] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
     useEffect(() => {
     
@@ -138,9 +139,16 @@ export default function StrudelEditor() {
     return (
         <main className="editor-container">
           <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings}/>
-          <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
+          < div style={{ textAlign: "center", margin: "10px 0"}}>
+            <button className="btn btn-outline-secondary" onClick={() => setIsCollapsed(!isCollapsed)}> {isCollapsed ? "Show Editor View ▼" : "Hide Editor View ▲"} </button>
+          </div>
+          {!isCollapsed && (
+            <>
+            <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
             <div id="editor" />
             <CanvasRoll />
+            </>
+          )}
         </main>
     );
 }
