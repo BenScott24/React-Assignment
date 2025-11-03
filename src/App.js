@@ -5,11 +5,13 @@ import logo from './Assets/logo.svg'
 function App() {
     return (
         <div className="App container-fluid">
-            <h2>
+            <header className="app-header">
                 <img src={logo} className="App-logo" alt="logo"/>
-                Strudel Web App
-            </h2>
-            <StrudelEditor />
+                <h1 className="app-title">Strudel Web App</h1>
+            </header>
+            <main className="app-main">
+                <StrudelEditor />
+            </main>
         </div>
     );
 }
