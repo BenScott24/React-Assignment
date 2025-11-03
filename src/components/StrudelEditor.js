@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
+import { evalScope, setTime } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
 import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
@@ -21,7 +21,10 @@ export default function StrudelEditor() {
     const [volume, setVolume] = useState(1);
     const [text, setText] = useState(stranger_tune);
     const [isMuted, setIsMuted] = useState(false);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [showText, setShowText] = useState(true);
+    const [showEditor, setShowEditor] = useState(true);
+    const [showCanvas, setShowCanvas] = useState(true);
+    const editorContainerRef = useRef(null);
 
     useEffect(() => {
     
@@ -118,7 +121,8 @@ export default function StrudelEditor() {
                 setIsPlaying(false);
               } else {
                 applySettings();
-                if (webaudioOutput && webaudioOutput.node) webaudioOutput.node.connect(gainNode);
+                if (webaudioOutput && webaudioOutput.node) 
+                webaudioOutput.node.connect(gainNode);
                 editorInstance.evaluate();
                 setIsPlaying(true);
               }
@@ -139,16 +143,27 @@ export default function StrudelEditor() {
     return (
         <main className="editor-container">
           <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings}/>
-          < div style={{ textAlign: "center", margin: "10px 0"}}>
-            <button className="btn btn-outline-secondary" onClick={() => setIsCollapsed(!isCollapsed)}> {isCollapsed ? "Show Editor View ▼" : "Hide Editor View ▲"} </button>
+          <div style={{ textAlign: "center", margin: "10px 0"}}>
+            <button className="btn btn-outline-secondary" onClick={() => setShowText(!showText)}> 
+              {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} </button>
           </div>
-          {!isCollapsed && (
-            <>
+          {showText && (
             <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
-            <div id="editor" />
-            <CanvasRoll />
-            </>
           )}
-        </main>
+           <div style={{ textAlign: "center", margin: "10px 0"}}>
+            <button className="btn btn-outline-secondary" onClick={() => {
+              setShowEditor(!showEditor);
+              if (!showEditor && editorInstance) {setTimeout(() => editorInstance.setCode(text), 100);}}}>
+              {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} 
+              </button>
+            </div>
+          <div id="editor" ref={editorContainerRef} style={{ display: showEditor ? "block" : "none"}} />
+          <div style={{textAlign: "center", margin: "10px 0"}}>
+            <button className="btn btn-outline-secondary" onClick={() => setShowCanvas(!showCanvas)}>
+              {showCanvas ? "Hide Canvas Roll ▲": "Show Canvas Roll▼"}
+            </button>
+          </div>
+          {showCanvas && <CanvasRoll />}
+      </main>
     );
-}
+  }
