@@ -43,10 +43,13 @@ body, .App {
   color: #00ff99;
   border-radius: 12px;
   padding: 10px;
-  min-height: 350px;
-  padding:10px;
+  height: 650px;
+  overflow: auto;
   margin-bottom: 20px ;
   box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
 }
 
 .btn {
