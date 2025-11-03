@@ -114,10 +114,10 @@ export default function StrudelEditor() {
 
     return (
         <main className="editor-container">
+          <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying}/>
           <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
             <div id="editor" />
             <CanvasRoll />
-            <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying}/>
         </main>
     );
 }
