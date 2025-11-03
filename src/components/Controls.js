@@ -63,7 +63,7 @@ export default function Controls({ playPause, restart, instrument, setInstrument
     const handleLoadClick = () => fileInputRef.current.click();
 
     return (
-        <nav className="container-fluid">
+        <nav className="controls-wrapper">
             <div className="row">
                 <div className="col">
                     <button className="btn btn-outline-primary" onClick={playPause}>{isPlaying ? "⏸" : "▶"}</button>
