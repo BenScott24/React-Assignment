@@ -4,7 +4,7 @@ import volume_on from '../Assets/volume_on.svg';
 import volume_off from '../Assets/volume_off.svg';
 import { useEffect, useState, useRef } from "react";
 
-export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying}) {
+export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying, onMuteToggle, onApply}) {
     const [showAdvanced, setShowAdvanced] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const fileInputRef = useRef();
@@ -25,7 +25,11 @@ export default function Controls({ playPause, restart, instrument, setInstrument
         return () => window.removeEventListener("keydown", handleKey);
     }, [playPause, restart]);
 
-    const toggleMute = () => setIsMuted(!isMuted);
+    const toggleMute = () => {
+      const newMuted = !isMuted;
+      setIsMuted(newMuted);
+      if (onMuteToggle) onMuteToggle(newMuted);
+    };
 
     const saveSettings = () => {
       const settings = { instrument, speedLevel, volume};
@@ -78,7 +82,7 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                     <div className="row">
                         <div className="col">
                             <h5><strong>Instruments</strong></h5>
-                              {["drums","synth","bass"].map((instruments) => (
+                              {["drums","synth","bass", "default"].map((instruments) => (
                                 <label className="form-check" key={instruments}>
                                   <input type="radio" name="instrument" value={instruments} checked={instrument === instruments} onChange={() => setInstrument(instruments)} />
                                   {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
@@ -90,6 +94,9 @@ export default function Controls({ playPause, restart, instrument, setInstrument
                         <div className="col">
                             <h5>Song Speed</h5>
                             <input type="range" min="0.25" max="5" step="0.05" value={speedLevel} onChange={(input) => setSpeedLevel(parseFloat(input.target.value))} />
+                        </div>
+                        <div style={{ marginTop: "10px"}}>
+                          <button className="btn btn-outline-primary" onClick={() => onApply && onApply()}>Apply</button>
                         </div>
                     </div>
                 </div>

@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
+import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds, registerSoundfonts } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
-import { registerSoundfonts } from '@strudel/soundfonts';
 import console_monkey_patch from '../console-monkey-patch';
 import {stranger_tune} from "../Assets/tunes";
 import Controls from './Controls';
@@ -20,6 +19,7 @@ export default function StrudelEditor() {
     const [speedLevel, setSpeedLevel] = useState(1);
     const [volume, setVolume] = useState(1);
     const [text, setText] = useState(stranger_tune);
+    const [isMuted, setIsMuted] = useState(false);
 
     useEffect(() => {
     
@@ -70,8 +70,10 @@ export default function StrudelEditor() {
            const applySettings = () => {
             if (!editorInstance) return;
             let code = text;
-
-            if (instrument === "drums") {
+            
+            if (instrument === "default") {
+              code = stranger_tune;
+            } else if (instrument === "drums") {
               code = code.replace(/bassline:[\s\S]*?main_arp:/, "drums:\nstack(\n  s(\"tech:5\")\n  .postgain(6)\n  .pcurve(2)\n  .pdec(1)\n  .struct(pick(drum_structure, 0)),\n)");
             } else if (instrument === "synth") {
               code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
@@ -81,8 +83,28 @@ export default function StrudelEditor() {
 
             const baseCPS = 140 / 60 / 4;
             code = code.replace(/setcps\([^\)]*\)/,`setcps(${baseCPS * speedLevel})`);
+            
+            if (isMuted) {
+              code += "\nall(x => x.gain(mouseX.range(0,0)))\nall(x => x.log())";
+            } else {
+              code += "\n// all(x => x.gain(mouseX.range(0,1)))\n// all(x => x.log())";
+            }
+
 
             editorInstance.setCode(code);
+           };
+
+           const handleMuteToggle = (mute) => {
+            setIsMuted(muted);
+            applySettings();
+           };
+
+           const handleApplySettings = () => {
+            applySettings();
+            if (isPlaying) {
+              editorInstance.stop();
+              editorInstance.evaluate();
+            }
            };
 
            const playPause = () => {
@@ -103,7 +125,7 @@ export default function StrudelEditor() {
 
            const restart = () => {
             if (!editorInstance || !gainNode) return;
-            applySettings();
+            handleApplySettings();
             const audioCtx = getAudioContext();
             audioCtx.resume().then(() => {
               editorInstance.stop();
@@ -114,7 +136,7 @@ export default function StrudelEditor() {
 
     return (
         <main className="editor-container">
-          <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying}/>
+          <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} volume={volume} setVolume={setVolume} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings}/>
           <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
             <div id="editor" />
             <CanvasRoll />
