@@ -152,7 +152,7 @@ export default function Controls({
 
               {/* Instruments radio buttons */}
               <h5><strong>Instruments</strong></h5>
-              {["drums", "synth", "bass", "default"].map((instruments) => (
+              {["synth", "bass", "default"].map((instruments) => (
                 <label className="form-check" key={instruments}>
                   <input type="radio" name="instrument" value={instruments} checked={instrument === instruments} onChange={() => setInstrument(instruments)} />
                   {instruments.charAt(0).toUpperCase() + instruments.slice(1)}
