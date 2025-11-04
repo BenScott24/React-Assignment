@@ -103,7 +103,7 @@ export default function StrudelEditor() {
             setIsMuted(mute);
             applySettings();
            };
-
+           
            const handleApplySettings = () => {
             applySettings();
             if (isPlaying) {
