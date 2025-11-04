@@ -57,10 +57,14 @@ export default function Controls({
             // Left arrow key triggers restart
             if (input.code == "ArrowLeft") { 
               input.preventDefault(); // Prevent default browser action
-              restart(); 
+              restart();  // Call restart function
             }
 
-
+            // m key toggles mute/unmute
+            if (input.code === "m") {
+              input.preventDefault(); // Prevent default browser action
+              onMuteToggle(); // Call onMuteToggle function
+            }
         };
 
         window.addEventListener("keydown", handleKey);
