@@ -1,24 +1,66 @@
-import save_icon from '../Assets/save_icon.svg';
-import upload_icon from '../Assets/upload_icon.svg';
-import volume_on from '../Assets/volume_on.svg';
-import volume_off from '../Assets/volume_off.svg';
-import { useEffect, useState, useRef } from "react";
+// Import icons for buttons (SVG images)
+import save_icon from '../Assets/save_icon.svg'; // Icon for Save Settings button
+import upload_icon from '../Assets/upload_icon.svg'; // Icon for Load Settings button
+import volume_on from '../Assets/volume_on.svg'; // Icon for unmute button
+import volume_off from '../Assets/volume_off.svg'; // Icon for mute button
 
-export default function Controls({ playPause, restart, instrument, setInstrument, speedLevel, setSpeedLevel, volume, setVolume, gainNode, isPlaying, onMuteToggle, onApply}) {
+// Import React hooks to manage state, refs, and side-effects
+import { useEffect, useState, useRef } from "react"; 
+
+// Define the main Controls component
+export default function Controls({ 
+    playPause, // Function to play or pause the music
+    restart,  // Function to restart the music from beginning
+    instrument, // Current instrument selected
+    setInstrument, // Function to update the instrument state
+    speedLevel, // Current song speed
+    setSpeedLevel, // Function to update the speed level
+    volume, // Current audio volume
+    setVolume, // Function to update volume
+    gainNode, // Web Audio GainNode to control audio volume
+    isPlaying, // Boolean indicating if audio is playing
+    onMuteToggle, // Callback function when mute is toggled
+    onApply // Callback function when the Apply button is clicked
+  }) {
+
+    // State to toggle visibility of advanced controls panel
     const [showAdvanced, setShowAdvanced] = useState(false);
+
+    // State to track if audio is muted
     const [isMuted, setIsMuted] = useState(false);
+    
+    // Ref for the hidden file input to load settings from JSON
     const fileInputRef = useRef();
-
-  useEffect(() => {
-    if (!gainNode) return;
-    gainNode.gain.value = isMuted ? 0 : volume;
-  }, [isMuted,gainNode, volume]);
-
   
-   useEffect(() => {
+  // Effect to update the gainNode whenever volume or mute state changes
+  useEffect(() => {
+
+    // If gainNode is not initialized yet, do nothing
+    if (!gainNode) return;
+
+    // Set gain to 0 if muted else use current volume
+    gainNode.gain.value = isMuted ? 0 : volume;
+  }, [isMuted,gainNode, volume]); // Only run effect when mute state, gainNode, or volume changes
+
+    // Effect to attach global keyboard shortcuts
+    useEffect(() => {
+
+        // Function to handle keydown events
         const handleKey = (input) => {
-            if (input.code == "Space") { input.preventDefault(); playPause(); }
-            if (input.code == "ArrowLeft") { input.preventDefault(); restart(); }
+
+            // Space bar toggles play/pause
+            if (input.code == "Space") { 
+              input.preventDefault(); // Prevent scrolling or other default behaviour
+              playPause(); // Call playPause function
+            }
+
+            // Left arrow key triggers restart
+            if (input.code == "ArrowLeft") { 
+              input.preventDefault(); // Prevent default browser action
+              restart(); 
+            }
+
+
         };
 
         window.addEventListener("keydown", handleKey);
