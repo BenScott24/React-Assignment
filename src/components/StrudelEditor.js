@@ -92,13 +92,21 @@ export default function StrudelEditor() {
 
   // Function to apply current instrument, speed and mute settings
   const applySettings = () => {
-    if (!editorInstance) return;
+
+    // Exit if editor is not ready
+    if (!editorInstance) return; 
+
+    // Start with current code text
     let code = text;
 
+    // Replace code depending on instrument selection
     if (instrument === "default") {
-      code = stranger_tune;
-    } else if (instrument === "synth") {
-      code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
+      code = stranger_tune; // Use original tune
+    } 
+    
+    // Replace the drum2 with supersaw 
+    else if (instrument === "synth") {
+      code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")"); 
     } else if (instrument === "bass") {
       code = code.replace(/bassline:[\s\S]*?main_arp:/, "bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
     }
@@ -153,7 +161,7 @@ export default function StrudelEditor() {
 
   return (
     <main className="editor-container">
-      <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings} />
+      <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} isPlaying={isPlaying} isMuted={isMuted} onMuteToggle={handleMuteToggle} onApply={handleApplySettings} />
       <div style={{ textAlign: "center", margin: "10px 0" }}>
         <button className="btn btn-outline-secondary" onClick={() => setShowText(!showText)}>
           {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} </button>
