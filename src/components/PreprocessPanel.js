@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-export default function PreprocessPanel({ text, setText, editorInstance}) {
+export default function PreprocessPanel({ text, setText, editorInstance }) {
 
     useEffect(() => {
-        if (!editorInstance) return; 
-            editorInstance.setCode(text);
+        if (!editorInstance) return;
+        editorInstance.setCode(text);
     }, [text, editorInstance]);
 
     return (

@@ -6,7 +6,7 @@ function App() {
     return (
         <div className="App container-fluid">
             <header className="app-header">
-                <img src={logo} className="App-logo" alt="logo"/>
+                <img src={logo} className="App-logo" alt="logo" />
                 <h1 className="app-title">Strudel Web App</h1>
             </header>
             <main className="app-main">

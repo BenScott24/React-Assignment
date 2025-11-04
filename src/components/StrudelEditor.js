@@ -8,156 +8,157 @@ import { registerSoundfonts } from "@strudel/soundfonts";
 import console_monkey_patch from '../console-monkey-patch';
 
 
-import {stranger_tune} from "../Assets/tunes";
+import { stranger_tune } from "../Assets/tunes";
 import Controls from './Controls';
 import CanvasRoll from './CanvasRoll';
 import PreprocessPanel from "./PreprocessPanel";
 
 export default function StrudelEditor() {
-    const hasRun = useRef(false);
-    const [editorInstance, setEditorInstance] = useState(null);
-    const [gainNode, setGainNode] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [instrument, setInstrument] = useState("drums");
-    const [speedLevel, setSpeedLevel] = useState(1);
-    const [text, setText] = useState(stranger_tune);
-    const [isMuted, setIsMuted] = useState(false);
-    const [showText, setShowText] = useState(true);
-    const [showEditor, setShowEditor] = useState(true);
-    const [showCanvas, setShowCanvas] = useState(true);
+  const hasRun = useRef(false);
+  const [editorInstance, setEditorInstance] = useState(null);
+  const [gainNode, setGainNode] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [instrument, setInstrument] = useState("drums");
+  const [speedLevel, setSpeedLevel] = useState(1);
+  const [text, setText] = useState(stranger_tune);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showText, setShowText] = useState(true);
+  const [showEditor, setShowEditor] = useState(true);
+  const [showCanvas, setShowCanvas] = useState(true);
 
-    useEffect(() => {
-    
-        if (hasRun.current) return;
-            hasRun.current = true;
+  useEffect(() => {
 
-            console_monkey_patch();
-            initAudioOnFirstClick();
+    if (hasRun.current) return;
+    hasRun.current = true;
 
-                const canvas = document.getElementById('roll');
-                canvas.width = canvas.width * 2;
-                canvas.height = canvas.height * 2;
-                const drawContext = canvas.getContext('2d');
+    console_monkey_patch();
+    initAudioOnFirstClick();
 
-                const audioCtx = getAudioContext();
-                const gain = audioCtx.createGain();
-                gain.gain.value = 1;
-                gain.connect(audioCtx.destination);
-                setGainNode(gain);
+    const canvas = document.getElementById('roll');
+    canvas.width = canvas.width * 2;
+    canvas.height = canvas.height * 2;
+    const drawContext = canvas.getContext('2d');
 
-                const editor = new StrudelMirror({
-                    defaultOutput: webaudioOutput,
-                    getTime: () => audioCtx.currentTime,
-                    transpiler,
-                    root: document.getElementById('editor'),
-                    drawTime: [-2, 2],
-                    onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime: [-2, 2], fold: 0 }),
-                    prebake: async () => {
-                        const loadModules = evalScope(
-                            import('@strudel/core'),
-                            import('@strudel/draw'),
-                            import('@strudel/mini'),
-                            import('@strudel/tonal'),
-                            import('@strudel/webaudio'),
-                        );
-                        await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-                    },
-                });
-            
-            if (webaudioOutput && webaudioOutput.node) {
-                webaudioOutput.node.connect(gain);
-            }
-            editor.setCode(text);
-            setEditorInstance(editor);
-            
-            }, [text]);
+    const audioCtx = getAudioContext();
+    const gain = audioCtx.createGain();
+    gain.gain.value = 1;
+    gain.connect(audioCtx.destination);
+    setGainNode(gain);
 
-           const applySettings = () => {
-              if (!editorInstance) return;
-              let code = text;
+    const editor = new StrudelMirror({
+      defaultOutput: webaudioOutput,
+      getTime: () => audioCtx.currentTime,
+      transpiler,
+      root: document.getElementById('editor'),
+      drawTime: [-2, 2],
+      onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime: [-2, 2], fold: 0 }),
+      prebake: async () => {
+        const loadModules = evalScope(
+          import('@strudel/core'),
+          import('@strudel/draw'),
+          import('@strudel/mini'),
+          import('@strudel/tonal'),
+          import('@strudel/webaudio'),
+        );
+        await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+      },
+    });
 
-              if (instrument === "default") {
-                code = stranger_tune;
-              } else if (instrument === "drums") {
-                code = code.replace(/bassline:[\s\S]*?main_arp:/, "drums:\nstack(\n  s(\"tech:5\")\n  .postgain(6)\n  .pcurve(2)\n  .pdec(1)\n  .struct(pick(drum_structure, 0)),\n)");
-              } else if (instrument === "synth") {
-                code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
-              } else if (instrument === "bass") {
-                code = code.replace(/bassline:[\s\S]*?main_arp:/,"bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
-              }
+    if (webaudioOutput && webaudioOutput.node) {
+      webaudioOutput.node.connect(gain);
+    }
+    editor.setCode(text);
+    setEditorInstance(editor);
 
-              const baseCPS = 140 / 60 / 4;
-              code = code.replace(/setcps\([^\)]*\)/,`setcps(${baseCPS * speedLevel})`);
+  }, [text]);
 
-              if (isMuted) code += "\nall(x => x.gain(0))";
-              editorInstance.setCode(code);
-            };
+  const applySettings = () => {
+    if (!editorInstance) return;
+    let code = text;
 
-           const handleMuteToggle = () => {
-              setIsMuted(prev => !prev);
-              applySettings();
-           };
+    if (instrument === "default") {
+      code = stranger_tune;
+    } else if (instrument === "drums") {
+      code = code.replace(/bassline:[\s\S]*?main_arp:/, "drums:\nstack(\n  s(\"tech:5\")\n  .postgain(6)\n  .pcurve(2)\n  .pdec(1)\n  .struct(pick(drum_structure, 0)),\n)");
+    } else if (instrument === "synth") {
+      code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")");
+    } else if (instrument === "bass") {
+      code = code.replace(/bassline:[\s\S]*?main_arp:/, "bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
+    }
 
-           const handleApplySettings = () => {
-            applySettings();
-            if (isPlaying) {
-              editorInstance.stop();
-              editorInstance.evaluate();
-            }
-           };
+    const baseCPS = 140 / 60 / 4;
+    code = code.replace(/setcps\([^\)]*\)/, `setcps(${baseCPS * speedLevel})`);
 
-           const playPause = () => {
-            if (!editorInstance || !gainNode) return;
-            const audioCtx = getAudioContext();
-            audioCtx.resume().then(() => {
-              if (isPlaying) {
-                editorInstance.stop();
-                setIsPlaying(false);
-              } else {
-                applySettings();
-                if (webaudioOutput && webaudioOutput.node) 
-                webaudioOutput.node.connect(gainNode);
-                editorInstance.evaluate();
-                setIsPlaying(true);
-              }
-            });
-          };
+    if (isMuted) code += "\nall(x => x.gain(0))";
+    editorInstance.setCode(code);
+  };
 
-           const restart = () => {
-              if (!editorInstance || !gainNode) return;
-              handleApplySettings();
-              const audioCtx = getAudioContext();
-              audioCtx.resume().then(() => {
-                editorInstance.stop();
-                editorInstance.evaluate();
-                setIsPlaying(true);
-              });
-           };
+  const handleMuteToggle = () => {
+    setIsMuted(prev => !prev);
+    applySettings();
+  };
 
-    return (
-        <main className="editor-container">
-          <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings}/>
-          <div style={{ textAlign: "center", margin: "10px 0"}}>
-            <button className="btn btn-outline-secondary" onClick={() => setShowText(!showText)}> 
-              {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} </button>
-          </div>
-          {showText && (
-            <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
-          )}
-           <div style={{ textAlign: "center", margin: "10px 0"}}>
-            <button className="btn btn-outline-secondary" onClick={() => {
-              setShowEditor(!showEditor);
-              if (!showEditor && editorInstance) {setTimeout(() => editorInstance.setCode(text), 100);}}}>
-              {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} 
-              </button>
-            </div>
-          <div id="editor" style={{ display: showEditor ? "block" : "none"}} />
-          <div style={{textAlign: "center", margin: "10px 0"}}>
-            <button className="btn btn-outline-secondary" onClick={() => setShowCanvas(!showCanvas)}>
-              {showCanvas ? "Hide Canvas Roll ▲": "Show Canvas Roll▼"}
-            </button>
-          </div>
-          {showCanvas && <CanvasRoll />}
-      </main>
-    );
-  }
+  const handleApplySettings = () => {
+    applySettings();
+    if (isPlaying) {
+      editorInstance.stop();
+      editorInstance.evaluate();
+    }
+  };
+
+  const playPause = () => {
+    if (!editorInstance || !gainNode) return;
+    const audioCtx = getAudioContext();
+    audioCtx.resume().then(() => {
+      if (isPlaying) {
+        editorInstance.stop();
+        setIsPlaying(false);
+      } else {
+        applySettings();
+        if (webaudioOutput && webaudioOutput.node)
+          webaudioOutput.node.connect(gainNode);
+        editorInstance.evaluate();
+        setIsPlaying(true);
+      }
+    });
+  };
+
+  const restart = () => {
+    if (!editorInstance || !gainNode) return;
+    handleApplySettings();
+    const audioCtx = getAudioContext();
+    audioCtx.resume().then(() => {
+      editorInstance.stop();
+      editorInstance.evaluate();
+      setIsPlaying(true);
+    });
+  };
+
+  return (
+    <main className="editor-container">
+      <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} isPlaying={isPlaying} onMuteToggle={handleMuteToggle} onApply={handleApplySettings} />
+      <div style={{ textAlign: "center", margin: "10px 0" }}>
+        <button className="btn btn-outline-secondary" onClick={() => setShowText(!showText)}>
+          {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} </button>
+      </div>
+      {showText && (
+        <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
+      )}
+      <div style={{ textAlign: "center", margin: "10px 0" }}>
+        <button className="btn btn-outline-secondary" onClick={() => {
+          setShowEditor(!showEditor);
+          if (!showEditor && editorInstance) { setTimeout(() => editorInstance.setCode(text), 100); }
+        }}>
+          {showText ? "Hide Text Area ▲" : "Show Text Area ▼"}
+        </button>
+      </div>
+      <div id="editor" style={{ display: showEditor ? "block" : "none" }} />
+      <div style={{ textAlign: "center", margin: "10px 0" }}>
+        <button className="btn btn-outline-secondary" onClick={() => setShowCanvas(!showCanvas)}>
+          {showCanvas ? "Hide Canvas Roll ▲" : "Show Canvas Roll▼"}
+        </button>
+      </div>
+      {showCanvas && <CanvasRoll />}
+    </main>
+  );
+}
