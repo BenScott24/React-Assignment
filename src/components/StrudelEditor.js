@@ -37,7 +37,7 @@ export default function StrudelEditor() {
     initAudioOnFirstClick(); // Initialize WebAudio on first user interaction
 
     // Grab canvas element for drawing piano roll
-    const canvas = document.getElementById('roll'); 
+    const canvas = document.getElementById('roll');
 
     // Double canvas resolution for sharp rendering
     canvas.width = canvas.width * 2;
@@ -94,7 +94,7 @@ export default function StrudelEditor() {
   const applySettings = () => {
 
     // Exit if editor is not ready
-    if (!editorInstance) return; 
+    if (!editorInstance) return;
 
     // Start with current code text
     let code = text;
@@ -102,15 +102,15 @@ export default function StrudelEditor() {
     // Replace code depending on instrument selection
     if (instrument === "default") {
       code = stranger_tune; // Use original tune
-    } 
-    
+    }
+
     // If the selected instrument is synth replace the original drum section with a synth line
     else if (instrument === "synth") {
 
       // Replacing the drums: and drums2: with supersaw
       code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")"); // 
-    } 
-    
+    }
+
     // If the selected instrument is bass replace the original bassline section with a bass line
     else if (instrument === "bass") {
 
@@ -128,7 +128,7 @@ export default function StrudelEditor() {
     if (isMuted) code += "\nall(x => x.gain(0))";
 
     // Update editor with modified code
-    editorInstance.setCode(code); 
+    editorInstance.setCode(code);
   };
 
   // Toggle mute state
@@ -148,43 +148,66 @@ export default function StrudelEditor() {
 
   // Play or pause music
   const playPause = () => {
-    if (!editorInstance || !gainNode) return;
-    const audioCtx = getAudioContext();
-    audioCtx.resume().then(() => {
+    if (!editorInstance || !gainNode) return; // Exit if editor or gain node is not ready
+    const audioCtx = getAudioContext(); // Get the current WebAudio context
+    audioCtx.resume().then(() => { // Resume audio context if suspended
+
+      // Check if audio is playing
       if (isPlaying) {
-        editorInstance.stop();
-        setIsPlaying(false);
+        editorInstance.stop(); // Stop playback if currently playing
+        setIsPlaying(false); // Update state to indicate music is passed
       } else {
-        applySettings();
+        applySettings(); // Apply current instrument, speed and mute settings
         if (webaudioOutput && webaudioOutput.node)
-          webaudioOutput.node.connect(gainNode);
-        editorInstance.evaluate();
-        setIsPlaying(true);
+          webaudioOutput.node.connect(gainNode); // Ensure output is connected to gain node
+        editorInstance.evaluate(); // Start playback
+        setIsPlaying(true); // Update state to indicate music is playing
       }
     });
   };
 
+  // Function to restart the music from the beginning
   const restart = () => {
-    if (!editorInstance || !gainNode) return;
-    handleApplySettings();
-    const audioCtx = getAudioContext();
-    audioCtx.resume().then(() => {
-      editorInstance.stop();
-      editorInstance.evaluate();
-      setIsPlaying(true);
+    if (!editorInstance || !gainNode) return; // Exit if editor or gain node is not ready
+    handleApplySettings(); // Apply current settings before restarting
+    const audioCtx = getAudioContext(); // Get the current WebAudio context
+    audioCtx.resume().then(() => { // Resume audio context if suspended
+      editorInstance.stop(); // Stop any current playback
+      editorInstance.evaluate(); // Start playback from the beginning
+      setIsPlaying(true); // Update state to indicate music is playing
     });
   };
 
   return (
     <main className="editor-container">
-      <Controls playPause={playPause} restart={restart} gainNode={gainNode} instrument={instrument} setInstrument={setInstrument} speedLevel={speedLevel} setSpeedLevel={setSpeedLevel} isPlaying={isPlaying} isMuted={isMuted} onMuteToggle={handleMuteToggle} onApply={handleApplySettings} />
+
+      {/*Controls component: handles play/pause, restart, instrument selection, speed, mute and apply */}
+      <Controls
+        playPause={playPause}
+        restart={restart}
+        gainNode={gainNode}
+        instrument={instrument}
+        setInstrument={setInstrument}
+        speedLevel={speedLevel}
+        setSpeedLevel={setSpeedLevel}
+        isPlaying={isPlaying}
+        isMuted={isMuted}
+        onMuteToggle={handleMuteToggle}
+        onApply={handleApplySettings}
+      />
+
+      {/* Button to toggle visibility of the text/code area */}
       <div style={{ textAlign: "center", margin: "10px 0" }}>
         <button className="btn btn-outline-secondary" onClick={() => setShowText(!showText)}>
           {showText ? "Hide Text Area ▲" : "Show Text Area ▼"} </button>
       </div>
+
+      {/* Render the PreprocessPanel if the text area is visible */}
       {showText && (
         <PreprocessPanel text={text} setText={setText} editorInstance={editorInstance} />
       )}
+
+      {/* Button to toggle visibility of the code editor */}
       <div style={{ textAlign: "center", margin: "10px 0" }}>
         <button className="btn btn-outline-secondary" onClick={() => {
           setShowEditor(!showEditor);
@@ -193,12 +216,18 @@ export default function StrudelEditor() {
           {showText ? "Hide Text Area ▲" : "Show Text Area ▼"}
         </button>
       </div>
+
+      {/* Container for the Strudel Editor */}
       <div id="editor" style={{ display: showEditor ? "block" : "none" }} />
+
+      {/* Button to toggle visibility of the piano roll canvas*/}
       <div style={{ textAlign: "center", margin: "10px 0" }}>
         <button className="btn btn-outline-secondary" onClick={() => setShowCanvas(!showCanvas)}>
           {showCanvas ? "Hide Canvas Roll ▲" : "Show Canvas Roll▼"}
         </button>
       </div>
+
+      {/* Render the CanvasRoll component if the canvas is visible */}
       {showCanvas && <CanvasRoll />}
     </main>
   );
