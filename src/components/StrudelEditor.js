@@ -104,33 +104,49 @@ export default function StrudelEditor() {
       code = stranger_tune; // Use original tune
     } 
     
-    // Replace the drum2 with supersaw 
+    // If the selected instrument is synth replace the original drum section with a synth line
     else if (instrument === "synth") {
-      code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")"); 
-    } else if (instrument === "bass") {
+
+      // Replacing the drums: and drums2: with supersaw
+      code = code.replace(/drums:[\s\S]*?drums2:/, "bassline:\nnote(pick(basslines, 0)).sound(\"supersaw\")"); // 
+    } 
+    
+    // If the selected instrument is bass replace the original bassline section with a bass line
+    else if (instrument === "bass") {
+
+      // Replacing the bassline and main_arp with tech:15
       code = code.replace(/bassline:[\s\S]*?main_arp:/, "bassline:\nnote(pick(basslines, 0)).sound(\"tech:15\")");
     }
 
+    // Adjust code for song speed
     const baseCPS = 140 / 60 / 4;
+
+    // Replace the speed with a new value based on the base cycles per second multiplied by the speed level
     code = code.replace(/setcps\([^\)]*\)/, `setcps(${baseCPS * speedLevel})`);
 
+    // Apply mute if needed
     if (isMuted) code += "\nall(x => x.gain(0))";
-    editorInstance.setCode(code);
+
+    // Update editor with modified code
+    editorInstance.setCode(code); 
   };
 
+  // Toggle mute state
   const handleMuteToggle = () => {
-    setIsMuted(prev => !prev);
-    applySettings();
+    setIsMuted(prev => !prev); // Update state
+    applySettings(); // Reapply settings to update gain
   };
 
+  // Apply current settings (instrument, speed, mute)
   const handleApplySettings = () => {
-    applySettings();
-    if (isPlaying) {
-      editorInstance.stop();
-      editorInstance.evaluate();
+    applySettings(); // Call the method
+    if (isPlaying) { // Check if the audio is playing
+      editorInstance.stop(); // Stop playback to reset
+      editorInstance.evaluate(); // Start playback with new settings
     }
   };
 
+  // Play or pause music
   const playPause = () => {
     if (!editorInstance || !gainNode) return;
     const audioCtx = getAudioContext();
