@@ -1,12 +1,48 @@
-# Getting Started with Create React App
+# Overview
+This project is a React-based Strudel Web App that allows users to write, edit and play Strudel live-coding music patterns directly in the browser. It integrates a code editor, sound controls, instrument selection, mute/unmute functionality, and adjustable speed options.
 
+# Controls Description
+
+Play / Pause Button - Starts or stops the playback of the Strudel music code.
+Restart Button - Restarts the playback from the beginning.
+Mute Button - Instantly mutes or unmutes the audio output without needing to click apply.
+Instrument Selector - Lets you choose between different sound presets (synth, bass and default).
+Speed Slider - Changes the playback speed (tempo) of the composition.
+Apply Button - Updates and applies changes made to instruments, speed and other parameters.
+Collapse buttons - Hides and unhides sections of the web app for easier access.
+
+# Hotkeys
+
+For playing and pausing music:
+
+### `Space bar`
+
+For restarting the song:
+
+### `Left arrow key`
+
+For muting and unmuting the audio:
+
+### `M key + Left arrow key`
+
+# Demonstration Video:
+https://www.youtube.com/watch?v=OdK13r0BOHE 
+
+# Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## How to Run
+Extract the project folder from the submission ZIP.
+Open JavaScript Debug Terminal in the project root folder.
+Run the following scripts:
 
-In the project directory, you can run:
+To install the node modules:
 
-### `npm start`
+### `npm install`
+
+In the project directory to run the web app:
+
+### `npm start` 
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -68,3 +104,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
