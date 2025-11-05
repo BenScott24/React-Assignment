@@ -3,13 +3,19 @@ This project is a React-based Strudel Web App that allows users to write, edit a
 
 # Controls Description
 
-## Play / Pause Button - Starts or stops the playback of the Strudel music code.
-## Restart Button - Restarts the playback from the beginning.
-## Mute Button - Instantly mutes or unmutes the audio output without needing to click apply.
-## Instrument Selector - Lets you choose between different sound presets (synth, bass and default).
-## Speed Slider - Changes the playback speed (tempo) of the composition.
-## Apply Button - Updates and applies changes made to instruments, speed and other parameters.
-## Collapse buttons - Hides and unhides sections of the web app for easier access.
+Play / Pause Button - Starts or stops the playback of the Strudel music code.
+
+Restart Button - Restarts the playback from the beginning.
+
+Mute Button - Instantly mutes or unmutes the audio output without needing to click apply.
+
+Instrument Selector - Lets you choose between different sound presets (synth, bass and default).
+
+Speed Slider - Changes the playback speed (tempo) of the composition.
+
+Apply Button - Updates and applies changes made to instruments, speed and other parameters.
+
+Collapse buttons - Hides and unhides sections of the web app for easier access.
 
 # Hotkeys
 
